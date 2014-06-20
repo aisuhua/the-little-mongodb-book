@@ -593,7 +593,7 @@ With MongoDB we use the `mapReduce` command on a collection. `mapReduce` takes a
 You probably won't need to use MapReduce for most of your aggregations, but if you do, you can read more about it [on my blog](http://openmymind.net/2011/1/20/Understanding-Map-Reduce/) and in [MongoDB manual](http://docs.mongodb.org/manual/core/map-reduce/).
 
 ## 小结 ##
-In this chapter we covered MongoDB's [aggregation capabilities](http://docs.mongodb.org/manual/aggregation/).  Aggregation Pipeline is relatively simple to write once you understand how it's structured and it's a powerful way to group data. MapReduce is more complicated to understand, but its capabilities can be as boundless as any code you can write in JavaScript. 
+在这章中我们介绍了 MongoDB 的 [聚合功能(aggregation capabilities)](http://docs.mongodb.org/manual/aggregation/)。 一旦你理解了聚合管道(Aggregation Pipeline)的构造，它还是相对容易编写的，并且它是一个聚合数据的强有力工具。 MapReduce 更难理解一点，不过它强力无边，就像你用 JavaScript 写的代码一样。
 
 # 第七章 - 性能和工具 #
 In this last chapter, we look at a few performance topics as well as some of the tools available to MongoDB developers. We won't dive deeply into either topic, but we will examine the most important aspects of each.
