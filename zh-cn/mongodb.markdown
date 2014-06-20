@@ -1,6 +1,6 @@
-# About This Book #
+# 关于本书 #
 
-## License ##
+## 许可 ##
 The Little MongoDB Book book is licensed under the Attribution-NonCommercial 3.0 Unported license. **You should not have paid for this book.**
 
 You are basically free to copy, distribute, modify or display the book. However, I ask that you always attribute the book to me, Karl Seguin and do not use it for commercial purposes.
@@ -9,23 +9,23 @@ You can see the full text of the license at:
 
 <http://creativecommons.org/licenses/by-nc/3.0/legalcode>
 
-## About The Author ##
+## 关于作者 ##
 Karl Seguin is a developer with experience across various fields and technologies. He's an expert .NET and Ruby developer.  He's a semi-active contributor to OSS projects, a technical writer and an occasional speaker. With respect to MongoDB, he was a core contributor to the C# MongoDB library NoRM, wrote the interactive tutorial [mongly](http://openmymind.net/mongly/) as well as the [Mongo Web Admin](https://github.com/karlseguin/Mongo-Web-Admin). His free service for casual game developers, [mogade.com](http://mogade.com/), is powered by MongoDB.
 
 Karl has since written [The Little Redis Book](http://openmymind.net/2012/1/23/The-Little-Redis-Book/)
 
 His blog can be found at <http://openmymind.net>, and he tweets via [@karlseguin](http://twitter.com/karlseguin)
 
-## With Thanks To ##
+## 鸣谢 ##
 A special thanks to [Perry Neal](http://twitter.com/perryneal) for lending me his eyes, mind and passion. You provided me with invaluable help. Thank you.
 
-## Latest Version ##
+## 最新版本 ##
 This version was updated for MongoDB 2.6 by Asya Kamsky.  The latest source of this book is available at:
 
 <http://github.com/karlseguin/the-little-mongodb-book>.
 
-# Introduction #
- > It's not my fault the chapters are short, MongoDB is just easy to learn.
+# 简介 #
+ > 这章那么短不是我的错，MongoDB 就真的很易学。
 
 It is often said that technology moves at a blazing pace. It's true that there is an ever growing list of new technologies and techniques being released. However, I've long been of the opinion that the fundamental technologies used by programmers move at a rather slow pace. One could spend years learning little yet remain relevant. What is striking though is the speed at which established technologies get replaced. Seemingly overnight, long-established technologies find themselves threatened by shifts in developer focus.
 
@@ -39,7 +39,7 @@ You might be wondering where MongoDB fits into all of this. As a document-orient
 
 As you may have noticed, we use the terms MongoDB and Mongo interchangeably.
 
-# Getting Started #
+# 开始 #
 Most of this book will focus on core MongoDB functionality. We'll therefore rely on the MongoDB shell. While the shell is useful to learn as well as being a useful administrative tool, your code will use a MongoDB driver.
 
 This does bring up the first thing you should know about MongoDB: its drivers. MongoDB has a [number of official drivers](http://docs.mongodb.org/ecosystem/drivers/) for various languages. These drivers can be thought of as the various database drivers you are probably already familiar with. On top of these drivers, the development community has built more language/framework-specific libraries. For example, [NoRM](https://github.com/atheken/NoRM) is a C# library which implements LINQ, and [MongoMapper](https://github.com/jnunemaker/mongomapper) is a Ruby library which is ActiveRecord-friendly. Whether you choose to program directly against the core MongoDB drivers or some higher-level library is up to you. I point this out only because many people new to MongoDB are confused as to why there are both official drivers and community libraries - the former generally focuses on core communication/connectivity with MongoDB and the latter with more language and framework-specific implementations.
@@ -66,7 +66,7 @@ Hopefully you now have MongoDB up and running. If you get an error, read the out
 
 You can now launch `mongo` (without the *d*) which will connect a shell to your running server. Try entering `db.version()` to make sure everything's working as it should. Hopefully you'll see the version number you installed.
 
-# 第一章 - The Basics #
+# 第一章 - 基本知识 #
 We begin our journey by getting to know the basic mechanics of working with MongoDB. Obviously this is core to understanding MongoDB, but it should also help us answer higher-level questions about where MongoDB fits.
 
 To get started, there are six simple concepts we need to understand.
@@ -121,7 +121,7 @@ Now, back to our discussion about schema-less collections. Insert a totally diff
 
 And, again use `find` to list the documents. Once we know a bit more, we'll discuss this interesting behavior of MongoDB, but hopefully you are starting to understand why the more traditional terminology wasn't a good fit.
 
-## Mastering Selectors ##
+## 掌握选择器(Selector) ##
 In addition to the six concepts we've explored, there's one practical aspect of MongoDB you need to have a good grasp of before moving to more advanced topics: query selectors. A MongoDB query selector is like the `where` clause of an SQL statement. As such, you use it when finding, counting, updating and removing documents from collections. A selector is a JSON object, the simplest of which is `{}` which matches all documents. If we wanted to find all female unicorns, we could use `{gender:'f'}`.
 
 Before delving too deeply into selectors, let's set up some data to play with. First, remove what we've put so far in the `unicorns` collection via: `db.unicorns.remove({})`. Now, issue the following inserts to get some data we can play with (I suggest you copy and paste this):
@@ -243,7 +243,7 @@ The `ObjectId` which MongoDB generated for our `_id` field can be selected like 
 ## 小结 ##
 我们还没有看到 `update` , 或是能拿来做更华丽事情的 `find`。不过，我们已经安装好 MongoDB 并运行起来了, 简略的介绍了一下 `insert` 和 `remove` 命令 (完整版也没比我们介绍的多什么)。 我们还介绍了 `find` 以及了解了 MongoDB `selectors` 是怎么一回事。 我们起了个很好的头，并为以后的学习奠定了坚实基础。 信不信由你，其实你已经掌握了学习 MongoDB 所必须的大多数知识 - 它真的是易学易用。 我强烈建议你在继续学习之前在本机上多试试多玩玩。 插入不同的文档，可以试试看在不同的集合中，习惯一下使用不同的选择器。试试 `find`, `count` 和 `remove`。 多试几次之后，你会发现原来看起来那么格格不入的东西，用起来居然水到渠成。
 
-# 第二章 - Updating #
+# 第二章 - 更新 #
 In chapter 1 we introduced three of the four CRUD (create, read, update and delete) operations. This chapter is dedicated to the one we skipped over: `update`. `Update` has a few surprising behaviors, which is why we dedicate a chapter to it.
 
 ## Update: Replace Versus $set ##
@@ -327,10 +327,10 @@ You might expect to find all of your precious unicorns to be vaccinated. To get 
 ## 小结 ##
 本章中我们介绍了集合的基本 CRUD 操作。我们详细讲解了 `update` 及它的三个有趣的行为。 首先，如果你传 MongoDB 一个文档但是不带更新操作, MongoDB 的 `update` 会默认替换现有文档。因此，你通常要用到 `$set` 操作 (或者其他各种可用的用于修改文档的操作)。 其次， `update` 支持 `upsert` 操作，当你不知道文档是否存在的时候，非常有用。 最后，默认情况下， `update` 只更新第一个匹配文档，因此当你希望更新所有匹配文档时，你要用 `multi` 。
 
-# 第三章 - Mastering Find #
+# 第三章 - 掌握查询 #
 Chapter 1 provided a superficial look at the `find` command. There's more to `find` than understanding `selectors` though. We already mentioned that the result from `find` is a `cursor`. We'll now look at exactly what this means in more detail.
 
-## Field Selection ##
+## 字段选择 ##
 Before we jump into `cursors`, you should know that `find` takes a second optional parameter called "projection". This parameter is the list of fields we want to retrieve or exclude. For example, we can get all of the unicorns' names without getting back other fields by executing:
 
 	db.unicorns.find({}, {name: 1});
@@ -339,7 +339,7 @@ By default, the `_id` field is always returned. We can explicitly exclude it by 
 
 Aside from the `_id` field, you cannot mix and match inclusion and exclusion. If you think about it, that actually makes sense. You either want to select or exclude one or more fields explicitly.
 
-## Ordering ##
+## 排序(Ordering) ##
 A few times now I've mentioned that `find` returns a cursor whose execution is delayed until needed. However, what you've no doubt observed from the shell is that `find` executes immediately. This is a behavior of the shell only. We can observe the true behavior of `cursors` by looking at one of the methods we can chain to `find`. The first that we'll look at is `sort`. We specify the fields we want to sort on as a JSON document, using 1 for ascending and -1 for descending. For example:
 
 	//heaviest unicorns first
@@ -351,7 +351,7 @@ A few times now I've mentioned that `find` returns a cursor whose execution is d
 
 As with a relational database, MongoDB can use an index for sorting. We'll look at indexes in more detail later on. However, you should know that MongoDB limits the size of your sort without an index. That is, if you try to sort a very large result set which can't use an index, you'll get an error. Some people see this as a limitation. In truth, I wish more databases had the capability to refuse to run unoptimized queries. (I won't turn every MongoDB drawback into a positive, but I've seen enough poorly optimized databases that I sincerely wish they had a strict-mode.)
 
-## Paging ##
+## 分页(Paging) ##
 Paging results can be accomplished via the `limit` and `skip` cursor methods. To get the second and third heaviest unicorn, we could do:
 
 	db.unicorns.find()
@@ -361,7 +361,7 @@ Paging results can be accomplished via the `limit` and `skip` cursor methods. To
 
 Using `limit` in conjunction with `sort`, can be a way to avoid running into problems when sorting on non-indexed fields.
 
-## Count ##
+## 计数(Count) ##
 The shell makes it possible to execute a `count` directly on a collection, such as:
 
 	db.unicorns.count({vampires: {$gt: 50}})
@@ -374,7 +374,7 @@ In reality, `count` is actually a `cursor` method, the shell simply provides a s
 ## 小结 ##
 使用 `find` 和 `cursors` 非常简单。还讲了一些我们后面章节会用到的或是非常特殊情况才用的命令，不过不管怎样，现在，你应该已经非常熟练使用 mongo shell 以及理解 MongoDB 的基本原则了。
 
-# 第四章 - Data Modeling #
+# 第四章 - 数据建模 #
 Let's shift gears and have a more abstract conversation about MongoDB. Explaining a few new terms and some new syntax is a trivial task. Having a conversation about modeling with a new paradigm isn't as easy. The truth is that most of us are still finding out what works and what doesn't when it comes to modeling with these new technologies. It's a conversation we can start having, but ultimately you'll have to practice and learn on real code.
 
 Out of all NoSQL databases, document-oriented databases are probably the most similar to relational databases - at least when it comes to modeling. However, the differences that exist are important.
@@ -486,7 +486,7 @@ There's no hard rule (well, aside from 16MB). Play with different approaches and
 ## 小结 ##
 本章目标是提供一些对你在 MongoDB 中数据建模有帮助的指导, 一个新起点，如果愿意你可以这样认为。在一个面向文档系统中建模，和在面向关系世界中建模，是不一样的，但也没多少不同。你能得到更多的灵活性并且只有一个约束，而对于新系统，一切都很完美。你唯一会做错的就是你不去尝试。
 
-# 第五章 - When To Use MongoDB #
+# 第五章 - MongoDB 使用场景 #
 By now you should have a feel for where and how MongoDB might fit into your existing system. There are enough new and competing storage technologies that it's easy to get overwhelmed by all of the choices.
 
 For me, the most important lesson, which has nothing to do with MongoDB, is that you no longer have to rely on a single solution for dealing with your data. No doubt, a single solution has obvious advantages, and for a lot projects - possibly even most - a single solution is the sensible approach. The idea isn't that you *must* use different technologies, but rather that you *can*. Only you know whether the benefits of introducing a new solution outweigh the costs.
@@ -550,9 +550,9 @@ On the positive side, drivers exist for a great many languages, the protocol is 
 ## 小结 ##
 本章要说的是，MongoDB，大多数情况下，可以取代关系型数据库。它更简单更直接；更快速并且通常对应用开发者的约束更少。不过缺乏事务支持也许值得慎重考虑。当人们说起 *MongoDB 在新的数据库阵营中到底处在什么位置？* 时，答案很简单: **中庸**(*1*)。
 
-# 第六章 - Aggregating Data #
+# 第六章 - 数据聚合 #
 
-## Aggregation Pipeline ##
+## 聚合管道(Aggregation Pipeline) ##
 Aggregation pipeline gives you a way to transform and combine documents in your collection.  You do it by passing the documents through a pipeline that's somewhat analogous to the Unix "pipe" where you send output from one command to another to a third, etc.
 
 The simplest aggregation you are probably already familiar with is the SQL `group by` expression.  We already saw the simple `count()`  method, but what if we want to see how many unicorns are male and how many are female?  
@@ -598,7 +598,7 @@ You probably won't need to use MapReduce for most of your aggregations, but if y
 # 第七章 - 性能和工具 #
 In this last chapter, we look at a few performance topics as well as some of the tools available to MongoDB developers. We won't dive deeply into either topic, but we will examine the most important aspects of each.
 
-## Indexes ##
+## 索引(Index) ##
 At the very beginning we saw the special `system.indexes` collection which contains information on all the indexes in our database. Indexes in MongoDB work a lot like indexes in a relational database: they help improve query and sorting performance. Indexes are created via `ensureIndex`:
 
 	// where "name" is the field name
