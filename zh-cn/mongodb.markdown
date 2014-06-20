@@ -602,37 +602,37 @@ You probably won't need to use MapReduce for most of your aggregations, but if y
 在这章中，我们来讲几个关于性能的话题，以及在 MongoDB 开发中用到的一些工具。我们不会深入其中的一个话题，不过我们会指出每个话题中最重要的方面。
 
 ## 索引(Index) ##
-At the very beginning we saw the special `system.indexes` collection which contains information on all the indexes in our database. Indexes in MongoDB work a lot like indexes in a relational database: they help improve query and sorting performance. Indexes are created via `ensureIndex`:
+首先我们要介绍一个特殊的集合 `system.indexes` ，它保存了我们数据库中所有的索引信息。索引的作用在 MongoDB 中和关系型数据库基本一致: 帮助改善查询和排序的性能。创建索引用 `ensureIndex` :
 
 	// where "name" is the field name
 	db.unicorns.ensureIndex({name: 1});
 
-And dropped via `dropIndex`:
+删除索引用 `dropIndex`:
 
 	db.unicorns.dropIndex({name: 1});
 
-A unique index can be created by supplying a second parameter and setting `unique` to `true`:
+可以创建唯一索引，这需要把第二个参数 `unique` 设置为 `true`:
 
 	db.unicorns.ensureIndex({name: 1},
 		{unique: true});
 
-Indexes can be created on embedded fields (again, using the dot-notation) and on array fields. We can also create compound indexes:
+索引可以内嵌到字段中 (再说一次，用点号) 和任何数组字段。我们可以这样创建复合索引:
 
 	db.unicorns.ensureIndex({name: 1,
 		vampires: -1});
 
-The direction of your index (1 for ascending, -1 for descending) doesn't matter for a single key index, but it can make a difference for compound indexes when you are sorting on more than one indexed field.
+索引的顺序 (1 升序, -1 降序) 对单键索引不起任何影响，但它会在使用复合索引的时候有所不同，比如你用不止一个索引来进行排序的时候。
 
-The [indexes page](http://docs.mongodb.org/manual/indexes/) has additional information on indexes.
+阅读 [indexes page](http://docs.mongodb.org/manual/indexes/) 获取更多关于索引的信息。
 
 ## Explain ##
-To see whether or not your queries are using an index, you can use the `explain` method on a cursor:
+需要检查你的查询是否用到了索引，你可以通过 `explain` 方法:
 
 	db.unicorns.find().explain()
 
-The output tells us that a `BasicCursor` was used (which means non-indexed), that 12 objects were scanned, how long it took, what index, if any, was used as well as a few other pieces of useful information.
+输出告诉我们，我们用的是 `BasicCursor` (意思是没索引), 12 个对象被扫描，用了多少时间，什么索引，如果有索引，还会有其他有用信息。
 
-If we change our query to use an index, we'll see that a `BtreeCursor` was used, as well as the index used to fulfill the request:
+如果我们改变查询索引语句，查询一个有索引的字段，我们可以看到 `BtreeCursor` 作为索引被用到填充请求中去:
 
 	db.unicorns.find({name: 'Pilot'}).explain()
 
@@ -645,7 +645,7 @@ MongoDB supports auto-sharding. Sharding is an approach to scalability which par
 While replication can help performance somewhat (by isolating long running queries to secondaries, and reducing latency for some other types of queries), its main purpose is to provide high availability. Sharding is the primary method for scaling MongoDB clusters. Combining replication with sharding is the proscribed approach to achieve scaling and high availability. 
 
 ## Stats ##
-You can obtain statistics on a database by typing `db.stats()`. Most of the information deals with the size of your database. You can also get statistics on a collection, say `unicorns`, by typing `db.unicorns.stats()`. Most of this information relates to the size of your collection and its indexes.
+你可以通过 `db.stats()` 查询数据库的状态。基本上都是关于数据库大小的信息。你还可以查询集合的状态，比如说 `unicorns` 集合，可以输入 `db.unicorns.stats()`。基本上都是关于集合大小的信息，以及集合的索引信息。
 
 ## Profiler ##
 你可以这样执行 MongoDB profiler :
