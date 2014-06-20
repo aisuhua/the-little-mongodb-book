@@ -1,28 +1,31 @@
 # 关于本书 #
 
 ## 许可 ##
-The Little MongoDB Book book is licensed under the Attribution-NonCommercial 3.0 Unported license. **You should not have paid for this book.**
+本书《 The Little MongoDB Book 》基于 Attribution-NonCommercial 3.0 Unported license. **你无须为本书付款。**
 
-You are basically free to copy, distribute, modify or display the book. However, I ask that you always attribute the book to me, Karl Seguin and do not use it for commercial purposes.
+你可以自由的复制，分发，修改和传阅本书。但请认可该书属于作者 Karl Seguin，并请勿将本书用于任何商业目的。
 
-You can see the full text of the license at:
+你可以在以下链接查看完整的许可文档:
 
 <http://creativecommons.org/licenses/by-nc/3.0/legalcode>
 
 ## 关于作者 ##
-Karl Seguin is a developer with experience across various fields and technologies. He's an expert .NET and Ruby developer.  He's a semi-active contributor to OSS projects, a technical writer and an occasional speaker. With respect to MongoDB, he was a core contributor to the C# MongoDB library NoRM, wrote the interactive tutorial [mongly](http://openmymind.net/mongly/) as well as the [Mongo Web Admin](https://github.com/karlseguin/Mongo-Web-Admin). His free service for casual game developers, [mogade.com](http://mogade.com/), is powered by MongoDB.
+Karl Seguin 在多领域有着丰富经验，他是 .NET 和 Ruby 的开发专家。他也参与贡献 OSS 项目, 还是技术文档撰写人而且偶尔做做演讲。MongoDB 方面，他是 C# MongoDB 库 NoRM 的核心开发者，写有互动入门教程 [mongly](http://openmymind.net/mongly/) 和 [Mongo Web Admin](https://github.com/karlseguin/Mongo-Web-Admin)。他用 MongoDB，为休闲游戏开发者写了一个免费服务, [mogade.com](http://mogade.com/)。
 
-Karl has since written [The Little Redis Book](http://openmymind.net/2012/1/23/The-Little-Redis-Book/)
+Karl 还编写了 [The Little Redis Book](http://openmymind.net/2012/1/23/The-Little-Redis-Book/)
 
-His blog can be found at <http://openmymind.net>, and he tweets via [@karlseguin](http://twitter.com/karlseguin)
+你可以在 <http://openmymind.net> 找到他的 Blog，或者通过 [@karlseguin](http://twitter.com/karlseguin) 在 Twitter 上关注他。
 
 ## 鸣谢 ##
-A special thanks to [Perry Neal](http://twitter.com/perryneal) for lending me his eyes, mind and passion. You provided me with invaluable help. Thank you.
+特别感谢 [Perry Neal](http://twitter.com/perryneal), 赐予我你的视野，精神，和热情。你赐予了我无尽的力量。感恩。
 
 ## 最新版本 ##
-This version was updated for MongoDB 2.6 by Asya Kamsky.  The latest source of this book is available at:
+最新的版本由 Asya Kamsky 更新到了 MongoDB 2.6 。本书最新代码可以在这里获得:
 
 <http://github.com/karlseguin/the-little-mongodb-book>.
+
+### 中文版本 ###
+Karl 在 [the-little-mongodb-book](https://github.com/karlseguin/the-little-mongodb-book) 的 Github 链接中给出了 [justinyhuang](https://github.com/justinyhuang) 的 [the-little-mongodb-book-cn](https://github.com/justinyhuang/the-little-mongodb-book-cn)链接。但貌似 justinyhuang 并没有同步更新到 MongoDB 2.6 。内容上也和原文稍微有点出入，并且由于本人水平有限，无法提交自信正确的内容。因此重开一项目。如果你被搜索引擎引导到本工程，在此向你致歉，并希望有能力者且有时间者一同完善和同步本工程。
 
 # 简介 #
  > 这章那么短不是我的错，MongoDB 就真的很易学。
