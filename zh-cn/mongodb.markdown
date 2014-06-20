@@ -693,9 +693,9 @@ Note that `mongoexport` and `mongoimport` cannot always represent your data. Onl
 在这章中我们介绍了 MongoDB 的各种命令，工具和性能细节。我们没有涉及所有的东西，不过我们已经把常用的都看了一遍。MongoDB 的索引和关系型数据库中的索引非常类似，其他一些工具也一样。不过，在 MongoDB 中，这些更易于使用。
 
 # 总结 #
-你现在应该有足够的能力开始在真是项目中使用 MongoDB 了。虽然 MongoDB 远不止我们学到的这些内容，但是你要作的下一步是，把学到的知识融会贯通，熟悉我们需要用到的功能。[MongoDB website](http://www.mongodb.org/) 有许多有用的信息。官网的 [MongoDB user group](http://groups.google.com/group/mongodb-user) 是个问问题的地方。
+你现在应该有足够的能力开始在真实项目中使用 MongoDB 了。虽然 MongoDB 远不止我们学到的这些内容，但是你要作的下一步是，把学到的知识融会贯通，熟悉我们需要用到的功能。[MongoDB website](http://www.mongodb.org/) 有许多有用的信息。官网的 [MongoDB user group](http://groups.google.com/group/mongodb-user) 是个问问题的好地方。
 
-NoSQL 不止为需求而生，它同时还是不断尝试创新的成果。不得不承认的是，我们的领域是不断前行的。如果我们不尝试，一旦失败，我们就绝不会取得成功。就是这样的，我认为，这是让你在职业生涯不断前行的好方法。
+NoSQL 不光是为需求而生，它同时还是不断尝试创新的成果。不得不承认，我们的领域是不断前行的。如果我们不尝试，一旦失败，我们就绝不会取得成功。就是这样的，我认为，这是让你在职业生涯一路走好的方法。
 
 ----------
 
