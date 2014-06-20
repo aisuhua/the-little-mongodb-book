@@ -25,7 +25,7 @@ Karl 还编写了 [The Little Redis Book](http://openmymind.net/2012/1/23/The-Li
 <http://github.com/karlseguin/the-little-mongodb-book>.
 
 ### 中文版本 ###
-Karl 在 [the-little-mongodb-book](https://github.com/karlseguin/the-little-mongodb-book) 的 Github 链接中给出了 [justinyhuang](https://github.com/justinyhuang) 的 [the-little-mongodb-book-cn](https://github.com/justinyhuang/the-little-mongodb-book-cn)链接。但貌似 justinyhuang 并没有同步更新到 MongoDB 2.6 。内容上也和原文稍微有点出入，并且由于本人水平有限，无法提交自信正确的内容。因此重开一项目。如果你被搜索引擎引导到本工程，在此向你致歉，并希望有能力者且有时间者一同完善和同步本工程。
+Karl 在 [the-little-mongodb-book](https://github.com/karlseguin/the-little-mongodb-book) 的 Github 链接中给出了 [justinyhuang](https://github.com/justinyhuang) 的 [the-little-mongodb-book-cn](https://github.com/justinyhuang/the-little-mongodb-book-cn) 链接。但貌似 justinyhuang 并没有同步更新到 MongoDB 2.6 。内容上也和原文稍微有点出入，并且由于本人水平有限，无法提交自信正确的内容。因此重开一项目。如果你被搜索引擎引导到本工程，在此向你致歉，并希望有能力者且有时间者一同完善和同步本工程。
 
 # 简介 #
  > 这章那么短不是我的错，MongoDB 就真的很易学。
@@ -69,7 +69,7 @@ Hopefully you now have MongoDB up and running. If you get an error, read the out
 
 You can now launch `mongo` (without the *d*) which will connect a shell to your running server. Try entering `db.version()` to make sure everything's working as it should. Hopefully you'll see the version number you installed.
 
-# 第一章 - 基本知识 #
+# 第一章 - 基础知识 #
 We begin our journey by getting to know the basic mechanics of working with MongoDB. Obviously this is core to understanding MongoDB, but it should also help us answer higher-level questions about where MongoDB fits.
 
 To get started, there are six simple concepts we need to understand.
@@ -599,7 +599,7 @@ You probably won't need to use MapReduce for most of your aggregations, but if y
 在这章中我们介绍了 MongoDB 的 [聚合功能(aggregation capabilities)](http://docs.mongodb.org/manual/aggregation/)。 一旦你理解了聚合管道(Aggregation Pipeline)的构造，它还是相对容易编写的，并且它是一个聚合数据的强有力工具。 MapReduce 更难理解一点，不过它强力无边，就像你用 JavaScript 写的代码一样。
 
 # 第七章 - 性能和工具 #
-In this last chapter, we look at a few performance topics as well as some of the tools available to MongoDB developers. We won't dive deeply into either topic, but we will examine the most important aspects of each.
+在这章中，我们来讲几个关于性能的话题，以及在 MongoDB 开发中用到的一些工具。我们不会深入其中的一个话题，不过我们会指出每个话题中最重要的方面。
 
 ## 索引(Index) ##
 At the very beginning we saw the special `system.indexes` collection which contains information on all the indexes in our database. Indexes in MongoDB work a lot like indexes in a relational database: they help improve query and sorting performance. Indexes are created via `ensureIndex`:
@@ -648,49 +648,49 @@ While replication can help performance somewhat (by isolating long running queri
 You can obtain statistics on a database by typing `db.stats()`. Most of the information deals with the size of your database. You can also get statistics on a collection, say `unicorns`, by typing `db.unicorns.stats()`. Most of this information relates to the size of your collection and its indexes.
 
 ## Profiler ##
-You enable the MongoDB profiler by executing:
+你可以这样执行 MongoDB profiler :
 
 	db.setProfilingLevel(2);
 
-With it enabled, we can run a command:
+启动之后，我们可以执行一个命令:
 
 	db.unicorns.find({weight: {$gt: 600}});
 
-And then examine the profiler:
+然后检查 profiler:
 
 	db.system.profile.find()
 
-The output tells us what was run and when, how many documents were scanned, and how much data was returned.
+输出会告诉我们:什么时候执行了什么，有多少文档被扫描，有多少数据被返回。
 
-You disable the profiler by calling `setProfilingLevel` again but changing the parameter to `0`. Specifying `1` as the first parameter will profile queries that take more than 100 milliseconds. 100 milliseconds is the default threshold, you can specify a different minimum time, in milliseconds, with a second parameter:
+你要停止 profiler 只需要再调用一次 `setProfilingLevel` ，不过这次参数是 `0`。指定 `1` 作为第一个参数，将会过滤统计超过 100 milliseconds 的任务. 100 milliseconds 是默认的阈值，你可以在第二个参数中，指定不同的阈值时间，以 milliseconds 为单位:
 
 	//profile anything that takes
 	//more than 1 second
 	db.setProfilingLevel(1, 1000);
 
 ## 备份和还原 ##
-Within the MongoDB `bin` folder is a `mongodump` executable. Simply executing `mongodump` will connect to localhost and backup all of your databases to a `dump` subfolder. You can type `mongodump --help` to see additional options. Common options are `--db DBNAME` to back up a specific database and `--collection COLLECTIONNAME` to back up a specific collection. You can then use the `mongorestore` executable, located in the same `bin` folder, to restore a previously made backup. Again, the `--db` and `--collection` can be specified to restore a specific database and/or collection.  `mongodump` and `mongorestore` operate on BSON, which is MongoDB's native format.
+在 MongoDB 的 `bin` 目录下有一个可执行文件 `mongodump` 。简单执行 `mongodump` 会链接到 localhost 并备份你所有的数据库到 `dump` 子目录。你可以用 `mongodump --help` 查看更多执行参数。常用的参数有 `--db DBNAME` 备份指定数据库和 `--collection COLLECTIONNAME` 备份指定集合。你可以用 `mongorestore` 可执行文件，同样在 `bin` 目录下，还原之前的备份。同样， `--db` 和 `--collection` 可以指定还原的数据库和/或集合。 `mongodump` 和 `mongorestore` 使用 BSON，这是 MongoDB 的原生格式。
 
-For example, to back up our `learn` database to a `backup` folder, we'd execute (this is its own executable which you run in a command/terminal window, not within the mongo shell itself):
+比如，来备份我们的 `learn` 数据库导 `backup` 文件夹，我们需要执行(在控制台或者终端中执行该命令，而不是在 mongo shell 中):
 
 	mongodump --db learn --out backup
 
-To restore only the `unicorns` collection, we could then do:
+如果只还原 `unicorns` 集合，我们可以这样做:
 
 	mongorestore --db learn --collection unicorns \
 		backup/learn/unicorns.bson
 
-It's worth pointing out that `mongoexport` and `mongoimport` are two other executables which can be used to export and import data from JSON or CSV. For example, we can get a JSON output by doing:
+值得一提的是， `mongoexport` 和 `mongoimport` 是另外两个可执行文件，用于导出和从 JSON/CSV 格式文件导入数据。比如说，我们可以像这样导出一个 JSON:
 
 	mongoexport --db learn --collection unicorns
 
-And a CSV output by doing:
+CSV 格式是这样:
 
 	mongoexport --db learn \
 		--collection unicorns \
 		--csv --fields name,weight,vampires
 
-Note that `mongoexport` and `mongoimport` cannot always represent your data. Only `mongodump` and `mongorestore` should ever be used for actual backups.  You can read more about [your backup options](http://docs.mongodb.org/manual/core/backups/) in the MongoDB Manual.
+注意 `mongoexport` 和 `mongoimport` 不一定能正确代表数据。真实的备份中，只能使用 `mongodump` 和 `mongorestore` 。  你可以从 MongoDB 手册中读到更多的 [备份须知](http://docs.mongodb.org/manual/core/backups/) 。
 
 ## 小结 ##
 在这章中我们介绍了 MongoDB 的各种命令，工具和性能细节。我们没有涉及所有的东西，不过我们已经把常用的都看了一遍。MongoDB 的索引和关系型数据库中的索引非常类似，其他一些工具也一样。不过，在 MongoDB 中，这些更易于使用。
