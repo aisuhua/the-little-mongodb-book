@@ -548,7 +548,7 @@ You probably already know the answer to this, but MongoDB is obviously younger t
 On the positive side, drivers exist for a great many languages, the protocol is modern and simple, and development is happening at blinding speeds. MongoDB is in production at enough companies that concerns about maturity, while valid, are quickly becoming a thing of the past.
 
 ## 小结 ##
-本章要说的是，MongoDB，大多数情况下，可以取代关系型数据库。它更简单更直接；更快速并且通常对应用开发者的约束更少。不过缺乏事务支持也许值得慎重考虑。不过，当人们说起 *MongoDB 在新的数据库阵营中到底处在什么位置？* 时，答案很简单: **中庸**(*1*)。
+本章要说的是，MongoDB，大多数情况下，可以取代关系型数据库。它更简单更直接；更快速并且通常对应用开发者的约束更少。不过缺乏事务支持也许值得慎重考虑。当人们说起 *MongoDB 在新的数据库阵营中到底处在什么位置？* 时，答案很简单: **中庸**(*1*)。
 
 # 第六章 - Aggregating Data #
 
@@ -697,8 +697,9 @@ You should have enough information to start using MongoDB in a real project. The
 
 NoSQL was born not only out of necessity, but also out of an interest in trying new approaches. It is an acknowledgment that our field is ever-advancing and that if we don't try, and sometimes fail, we can never succeed. This, I think, is a good way to lead our professional lives.
 
+----------
+
 *1* :参考 [justinyhuang][1] 的翻译。MongoDB 属于 NoSQL，但是和传统关系型数据库类似，且较为通用。
 
-----------
 
 [1]:https://github.com/justinyhuang/the-little-mongodb-book-cn/blob/master/mongodb.md
