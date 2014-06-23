@@ -380,12 +380,12 @@ In reality, `count` is actually a `cursor` method, the shell simply provides a s
 # 第四章 - 数据建模 #
 让我们换换思维，对 MongoDB 进行一个更抽象的理解。介绍一些新的术语和一些新的语法是非常容易的。而要接受一个以新的范式来建模，是相当不简单的。事实是，当用新技术进行建模的时候，我们中的许多人还在找什么可用的什么不可用。在这里我们只是开始新的开端，而最终你需要去在实战中练习和学习。
 
-与大多数 NoSQL 数据库相比，面向文档型书酷酷和关系型数据库很相似 - 最少，在建模上是这样的。但是，不同点非常重要。
+与大多数 NoSQL 数据库相比，面向文档型数据库和关系型数据库很相似 - 至少，在建模上是这样的。但是，不同点非常重要。
 
 ## No Joins ##
-你需要适应的第一个，也是最根本的区别就是 mongoDB 没有链接(join) 。我不知道为什么 MongoDB 中不支持链接的具体原因，但是我知道链接基本上意味着不可扩展。就是说，一旦你把数据水平扩展，无论如何你都要放弃在客户端(应用服务器)使用链接。不管怎么样，事实就是，数据 *有* 关系, 但 MongoDB 不支持链接。
+你需要适应的第一个，也是最根本的区别就是 mongoDB 没有链接(join) 。我不知道 MongoDB 中不支持链接的具体原因，但是我知道链接基本上意味着不可扩展。就是说，一旦你把数据水平扩展，无论如何你都要放弃在客户端(应用服务器)使用链接。事实就是，数据 *有* 关系, 但 MongoDB 不支持链接。
 
-没别的办法，为了在无连接的世界生存下去，我们只能在我们的应用代码中自己实现链接。基本上，我们需要进行二次查询 `find` 相关数据保存到另一个集合中。设置我们的数据和在关系型数据中声明一个外键没什么区别。先不管我们那美丽的 `unicorns` 了，让我们来看看我们的 `employees`。 首先我们来创建一个雇主 (我提供了一个明确的 `_id` 这样我们就可以和例子作成一样)
+没别的办法，为了在无连接的世界生存下去，我们只能在我们的应用代码中自己实现链接。我们需要进行二次查询 `find` ，把相关数据保存到另一个集合中。我们设置数据和在关系型数据中声明一个外键没什么区别。先不管我们那美丽的 `unicorns` 了，让我们来看看我们的 `employees`。 首先我们来创建一个雇主 (我提供了一个明确的 `_id` ，这样我们就可以和例子作成一样)
 
 	db.employees.insert({_id: ObjectId(
 		"4d85c7039ab0fd70a117d730"),
@@ -412,7 +412,7 @@ In reality, `count` is actually a `cursor` method, the shell simply provides a s
 	db.employees.find({manager: ObjectId(
 		"4d85c7039ab0fd70a117d730")})
 
-没什么神奇的在这里。在最坏的情况下，大多数的时间，为弥补缺乏链接所做的仅仅是需要一个额外的查询(可能是被索引的)。
+这没什么神奇的。在最坏的情况下，大多数的时间，为弥补无链接所做的仅仅是增加一个额外的查询(可能是被索引的)。
 
 ## Arrays and Embedded Documents ##
 Just because MongoDB doesn't have joins doesn't mean it doesn't have a few tricks up its sleeve. Remember when we saw that MongoDB supports arrays as first class objects of a document? It turns out that this is incredibly handy when dealing with many-to-one or many-to-many relationships. As a simple example, if an employee could have two managers, we could simply store these in an array:
