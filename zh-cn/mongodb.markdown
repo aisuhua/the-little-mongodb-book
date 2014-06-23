@@ -545,10 +545,10 @@ Of course, parallelizing data processing isn't something relational databases ex
 ## Geospatial ##
 A particularly powerful feature of MongoDB is its support for [geospatial indexes](http://docs.mongodb.org/manual/applications/geospatial-indexes/). This allows you to store either geoJSON or x and y coordinates within documents and then find documents that are `$near` a set of coordinates or `$within` a box or circle. This is a feature best explained via some visual aids, so I invite you to try the [5 minute geospatial interactive tutorial](http://mongly.openmymind.net/geo/index), if you want to learn more.
 
-## Tools and Maturity ##
-You probably already know the answer to this, but MongoDB is obviously younger than most relational database systems. This is absolutely something you should consider, though how much it matters depends on what you are doing and how you are doing it. Nevertheless, an honest assessment simply can't ignore the fact that MongoDB is younger and the available tooling around isn't great (although the tooling around a lot of very mature relational databases is pretty horrible too!). As an example, the lack of support for base-10 floating point numbers will obviously be a concern (though not necessarily a show-stopper) for systems dealing with money.
+## 工具和成熟度 ##
+你应该已经知道这个问题的答案了，MongoDB 确实比大多数的关系型数据要年轻很多。这个问题确实是你应当考虑的，但是到底有多重要，这取决于你要做什么，怎么做。不管怎么说，一个好的评估，不可能忽略 MongoDB 年轻这一事实，而可用的工具也不是很好 (虽然成熟的关系型数据库工具有些也非常渣!)。举个例子，它缺乏对十进制浮点数的支持，在处理货币的系统来说，明显是一个问题 (尽管也不是致命的) 。
 
-On the positive side, drivers exist for a great many languages, the protocol is modern and simple, and development is happening at blinding speeds. MongoDB is in production at enough companies that concerns about maturity, while valid, are quickly becoming a thing of the past.
+积极的一方面，它为大多数语言提供了驱动，协议现代而简约，开发速度相当快。MongoDB 被众多公司用到了生产环境中，虽然有所担心，但经过验证，担心很快就变成了过去。
 
 ## 小结 ##
 本章要说的是，MongoDB，大多数情况下，可以取代关系型数据库。它更简单更直接；更快速并且通常对应用开发者的约束更少。不过缺乏事务支持也许值得慎重考虑。当人们说起 *MongoDB 在新的数据库阵营中到底处在什么位置？* 时，答案很简单: **中庸**(*1*)。
