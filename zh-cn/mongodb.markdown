@@ -378,20 +378,20 @@ In reality, `count` is actually a `cursor` method, the shell simply provides a s
 使用 `find` 和 `cursors` 非常简单。还讲了一些我们后面章节会用到的或是非常特殊情况才用的命令，不过不管怎样，现在，你应该已经非常熟练使用 mongo shell 以及理解 MongoDB 的基本原则了。
 
 # 第四章 - 数据建模 #
-Let's shift gears and have a more abstract conversation about MongoDB. Explaining a few new terms and some new syntax is a trivial task. Having a conversation about modeling with a new paradigm isn't as easy. The truth is that most of us are still finding out what works and what doesn't when it comes to modeling with these new technologies. It's a conversation we can start having, but ultimately you'll have to practice and learn on real code.
+让我们换换思维，对 MongoDB 进行一个更抽象的理解。介绍一些新的术语和一些新的语法是非常容易的。而要接受一个以新的范式来建模，是相当不简单的。事实是，当用新技术进行建模的时候，我们中的许多人还在找什么可用的什么不可用。在这里我们只是开始新的开端，而最终你需要去在实战中练习和学习。
 
-Out of all NoSQL databases, document-oriented databases are probably the most similar to relational databases - at least when it comes to modeling. However, the differences that exist are important.
+与大多数 NoSQL 数据库相比，面向文档型书酷酷和关系型数据库很相似 - 最少，在建模上是这样的。但是，不同点非常重要。
 
 ## No Joins ##
-The first and most fundamental difference that you'll need to get comfortable with is MongoDB's lack of joins. I don't know the specific reason why some type of join syntax isn't supported in MongoDB, but I do know that joins are generally seen as non-scalable. That is, once you start to split your data horizontally, you end up performing your joins on the client (the application server) anyway. Regardless of the reasons, the fact remains that data *is* relational, and MongoDB doesn't support joins.
+你需要适应的第一个，也是最根本的区别就是 mongoDB 没有链接(join) 。我不知道为什么 MongoDB 中不支持链接的具体原因，但是我知道链接基本上意味着不可扩展。就是说，一旦你把数据水平扩展，无论如何你都要放弃在客户端(应用服务器)使用链接。不管怎么样，事实就是，数据 *有* 关系, 但 MongoDB 不支持链接。
 
-Without knowing anything else, to live in a join-less world, we have to do joins ourselves within our application's code. Essentially we need to issue a second query to `find` the relevant data in a second collection. Setting our data up isn't any different than declaring a foreign key in a relational database. Let's give a little less focus to our beautiful `unicorns` and a bit more time to our `employees`. The first thing we'll do is create an employee (I'm providing an explicit `_id` so that we can build coherent examples)
+没别的办法，为了在无连接的世界生存下去，我们只能在我们的应用代码中自己实现链接。基本上，我们需要进行二次查询 `find` 相关数据保存到另一个集合中。设置我们的数据和在关系型数据中声明一个外键没什么区别。先不管我们那美丽的 `unicorns` 了，让我们来看看我们的 `employees`。 首先我们来创建一个雇主 (我提供了一个明确的 `_id` 这样我们就可以和例子作成一样)
 
 	db.employees.insert({_id: ObjectId(
 		"4d85c7039ab0fd70a117d730"),
 		name: 'Leto'})
 
-Now let's add a couple employees and set their manager as `Leto`:
+然后让我们加几个工人，把他们的管理者设置为 `Leto`:
 
 	db.employees.insert({_id: ObjectId(
 		"4d85c7039ab0fd70a117d731"),
@@ -405,14 +405,14 @@ Now let's add a couple employees and set their manager as `Leto`:
 		"4d85c7039ab0fd70a117d730")});
 
 
-(It's worth repeating that the `_id` can be any unique value. Since you'd likely use an `ObjectId` in real life, we'll use them here as well.)
+(有必要再重复一次， `_id` 可以是任何形式的唯一值。因为你很可能在实际中使用 `ObjectId` ，我们也在这里用它。)
 
-Of course, to find all of Leto's employees, one simply executes:
+当然，要找出 Leto 的所有工人，只需要执行:
 
 	db.employees.find({manager: ObjectId(
 		"4d85c7039ab0fd70a117d730")})
 
-There's nothing magical here. In the worst cases, most of the time, the lack of join will merely require an extra query (likely indexed).
+没什么神奇的在这里。在最坏的情况下，大多数的时间，为弥补缺乏链接所做的仅仅是需要一个额外的查询(可能是被索引的)。
 
 ## Arrays and Embedded Documents ##
 Just because MongoDB doesn't have joins doesn't mean it doesn't have a few tricks up its sleeve. Remember when we saw that MongoDB supports arrays as first class objects of a document? It turns out that this is incredibly handy when dealing with many-to-one or many-to-many relationships. As a simple example, if an employee could have two managers, we could simply store these in an array:
