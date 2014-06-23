@@ -589,11 +589,11 @@ There is another powerful pipeline operator called [`$project`](http://docs.mong
 This just barely scratches the surface of what you can do with aggregations.  In 2.6 aggregation got more powerful as the aggregate command returns either a cursor to the result set (which you already know how to work with from Chapter 1) or it can write your results into a new collection using the `$out` pipeline operator.  You can see a lot more examples as well as all of the supported pipeline and expression operators in the [MongoDB manual](http://docs.mongodb.org/manual/core/aggregation-pipeline/). 
 
 ## MapReduce ##
-MapReduce is a two-step approach to data processing. First you map, and then you reduce. The mapping step transforms the inputted documents and emits a key=>value pair (the key and/or value can be complex). Then, key/value pairs are grouped by key, such that values for the same key end up in an array. The reduce gets a key and the array of values emitted for that key, and produces the final result.  The map and reduce functions are written in JavaScript.
+MapReduce 分两步进行数据处理。首先是 map，然后 reduce。在 map 步骤中，转换输入文档和输出一个 key=>value 对(key 和/或 value 可以很复杂)。然后, key/value 对以 key 进行分组，有同样的 key 的 value 会被收入一个数组中。在 reduce 步骤中，获取 key 和该 key 的 value 的数组，生成最终结果。map 和 reduce 方法用 JavaScript 来编写。
 
-With MongoDB we use the `mapReduce` command on a collection. `mapReduce` takes a map function, a reduce function and an output directive. In our shell we can create and pass a JavaScript function. From most libraries you supply a string of your functions (which is a bit ugly). The third parameter sets additional options, for example we could filter, sort and limit the documents that we want analyzed. We can also supply a `finalize` method to be applied to the results after the `reduce` step.
+在 MongoDB 中我们对一个集合使用 `mapReduce` 命令。 `mapReduce` 执行 map 方法， reduce 方法和 output 指令。在我们的 shell 中，我们可以创建输入一个 JavaScript 方法。许多库中，支持字符串方法 (有点丑)。第三个参数设置一个附加参数，比如说我们可以过滤，排序和限制那些我们想要分析的文档。我们也可以提供一个 `finalize` 方法来处理 `reduce` 步骤之后的结果。
 
-You probably won't need to use MapReduce for most of your aggregations, but if you do, you can read more about it [on my blog](http://openmymind.net/2011/1/20/Understanding-Map-Reduce/) and in [MongoDB manual](http://docs.mongodb.org/manual/core/map-reduce/).
+在你的大多数聚合中，也许无需用到 MapReduce , 但如果需要，你可以读到更多关于它的内容，从 [我的 blog](http://openmymind.net/2011/1/20/Understanding-Map-Reduce/) 和 [MongoDB manual](http://docs.mongodb.org/manual/core/map-reduce/)。
 
 ## 小结 ##
 在这章中我们介绍了 MongoDB 的 [聚合功能(aggregation capabilities)](http://docs.mongodb.org/manual/aggregation/)。 一旦你理解了聚合管道(Aggregation Pipeline)的构造，它还是相对容易编写的，并且它是一个聚合数据的强有力工具。 MapReduce 更难理解一点，不过它强力无边，就像你用 JavaScript 写的代码一样。
