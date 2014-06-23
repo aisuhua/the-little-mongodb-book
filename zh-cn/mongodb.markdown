@@ -556,25 +556,25 @@ On the positive side, drivers exist for a great many languages, the protocol is 
 # 第六章 - 数据聚合 #
 
 ## 聚合管道(Aggregation Pipeline) ##
-Aggregation pipeline gives you a way to transform and combine documents in your collection.  You do it by passing the documents through a pipeline that's somewhat analogous to the Unix "pipe" where you send output from one command to another to a third, etc.
+聚合管道提供了一种方法用于转换整合文档到集合。你可以通过管道来传递文档，就像 Unix 的 "pipe" 一样，将一个命令的输出传递到另第二个，第三个，等等。
 
-The simplest aggregation you are probably already familiar with is the SQL `group by` expression.  We already saw the simple `count()`  method, but what if we want to see how many unicorns are male and how many are female?  
+最简单的聚合，应该是你在 SQL 中早已熟悉的 `group by` 操作。我们已经看过 `count()` 方法，那么假设我们怎么才能知道有多少匹公独角兽，有多少匹母独角兽呢？
 
 	db.unicorns.aggregate([{$group:{_id:'$gender',
 		total: {$sum:1}}}])
 
-In the shell we have the `aggregate` helper which takes an array of pipeline operators.  For a simple count grouped by something, we only need one such operator and it's called `$group`.   This is the exact analog of `GROUP BY` in SQL where we create a new document with `_id` field indicating what field we are grouping by (here it's `gender`) and other fields usually getting assigned results of some aggregation, in this case we `$sum` 1 for each document that matches a particular gender.  You probably noticed that the `_id` field was assigned `'$gender'` and not `'gender'` - the `'$'` before a field name indicates that the value of this field from incoming document will be substituted.
+在 shell 中，我们有 `aggregate` 辅助类，用来执行数组的管道操作。对于简单的对某物进行分组技术，我们只需要简单的调用 `$group`。这和 SQL 中的 `GROUP BY` 完全一致，我们用来创建一个新的文档，以 `_id` 字段署名我们以什么来分组(在这里是以 `gender`) ，另外的字段通常被分配为聚合的结果，在这里，我们对匹配某一性别的各文档使用了 `$sum` 1 。你应该注意到了 `_id` 字段被分配为 `'$gender'` 而不是 `'gender'` - 字段前面的 `'$'` 表示，该字段将会被输入的文档中的有同样名字的值所代替。
 
-What are some of the other pipeline operators that we can use?  The most common one to use before (and frequently after) `$group` would be `$match` - this is exactly like the `find` method and it allows us to aggregate only a matching subset of our documents, or to exclude some documents from our result.
+我们还可以用其他什么管道操作呢？在 `$group` 之前(之后也很常用)的一个是 `$match` - 这和 `find` 方法完全一样，允许我们获取文档中某个匹配的子集，或者在我们的结果中对文档进行筛选。
 
 	db.unicorns.aggregate([{$match: {weight:{$lt:600}}},
 		{$group: {_id:'$gender',  total:{$sum:1},
 		  avgVamp:{$avg:'$vampires'}}},
 		{$sort:{avgVamp:-1}} ])
 		
-Here we introduced another pipeline operator `$sort` which does exactly what you would expect, along with it we also get `$skip` and `$limit`.  We also used a `$group` operator `$avg`.
+这里我们介绍另外一个管道操作 `$sort` ，作用和你想的完全一致，还有和它一起用的 `$skip` 和 `$limit`。以及用 `$group` 操作 `$avg`。
 
-MongoDB arrays are powerful and they don't stop us from being able to aggregate on values that are stored inside of them.  We do need to be able to "flatten" them to properly count everything:
+MongoDB 数组非常强大，并且他们不会阻止我们往保存中的数组中写入内容。我们需要可以 "flatten" 他们以便对所有的东西进行计数:
 
 	db.unicorns.aggregate([{$unwind:'$loves'},
      	{$group: {_id:'$loves',  total:{$sum:1},
@@ -582,11 +582,11 @@ MongoDB arrays are powerful and they don't stop us from being able to aggregate 
 	  	{$sort:{total:-1}}, 
 	  	{$limit:1} ])
 		
-Here we will find out which food item is loved by the most unicorns and we will also get the list of names of all the unicorns that love it.  `$sort` and `$limit` in combination allow you to get answers to "top N" types of questions.
+这里我们可以找出独角兽最喜欢吃的食物，以及拿到独角兽们喜欢吃的食物名单。 `$sort` 和 `$limit` 的组合能让你拿到 "top N" 这种查询的结果。
 
-There is another powerful pipeline operator called [`$project`](http://docs.mongodb.org/manual/reference/operator/aggregation/project/#pipe._S_project) (analogous to the projection we can specify to `find`) which allows you not just to include certain fields, but to create or calculate new fields based on values in existing fields.  For example, you can use math operators to add together values of several fields before finding out the average, or you can use string operators to create a new field that's a concatenation of some existing fields.
+还有另外一个强大的管道操作叫做 [`$project`](http://docs.mongodb.org/manual/reference/operator/aggregation/project/#pipe._S_project) (类似于 `find`)，不但允许你拿到指定字段，还可以根据现存字段进行创建或计算一个新字段。比如，可以用数学操作，在做平均运算之前，对几个字段进行加法运算，或者你可以用字符串操作创建一个新的字段，用于拼接现有字段。
 
-This just barely scratches the surface of what you can do with aggregations.  In 2.6 aggregation got more powerful as the aggregate command returns either a cursor to the result set (which you already know how to work with from Chapter 1) or it can write your results into a new collection using the `$out` pipeline operator.  You can see a lot more examples as well as all of the supported pipeline and expression operators in the [MongoDB manual](http://docs.mongodb.org/manual/core/aggregation-pipeline/). 
+这只是用聚合所能做到的众多功能中的皮毛， 2.6 的聚合拥有了更强大的力量，比如聚合命令可以返回结果集的游标(我们已经在第一章学过了) 或者可以将结果写到另外一个新集合中，通过 `$out` 管道操作。你可以从 [MongoDB manual](http://docs.mongodb.org/manual/core/aggregation-pipeline/) 得到关于管道操作和表达式操作更多的例子。 
 
 ## MapReduce ##
 MapReduce 分两步进行数据处理。首先是 map，然后 reduce。在 map 步骤中，转换输入文档和输出一个 key=>value 对(key 和/或 value 可以很复杂)。然后, key/value 对以 key 进行分组，有同样的 key 的 value 会被收入一个数组中。在 reduce 步骤中，获取 key 和该 key 的 value 的数组，生成最终结果。map 和 reduce 方法用 JavaScript 来编写。
