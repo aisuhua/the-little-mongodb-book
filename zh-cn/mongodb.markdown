@@ -450,6 +450,7 @@ MongoDB 不支持链接不意味着它没优势。还记得我们说过 MongoDB 
 我们将简单的介绍一下内嵌文档适用情况，以及你怎么使用它们。
 
 结合两个概念，我们甚至可以内嵌文档数组:
+
 	db.employees.insert({_id: ObjectId(
 		"4d85c7039ab0fd70a117d735"),
 		name: 'Chani',
