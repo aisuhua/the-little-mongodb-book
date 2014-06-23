@@ -415,7 +415,7 @@ In reality, `count` is actually a `cursor` method, the shell simply provides a s
 这没什么神奇的。在最坏的情况下，大多数的时间，为弥补无链接所做的仅仅是增加一个额外的查询(可能是被索引的)。
 
 ## Arrays and Embedded Documents ##
-Just because MongoDB doesn't have joins doesn't mean it doesn't have a few tricks up its sleeve. Remember when we saw that MongoDB supports arrays as first class objects of a document? It turns out that this is incredibly handy when dealing with many-to-one or many-to-many relationships. As a simple example, if an employee could have two managers, we could simply store these in an array:
+MongoDB 不支持链接不意味着它没优势。还记得我们说过 MongoDB 支持数组作为文档中的一级对象吗？这在处理多对一(many-to-one)或者多对多(many-to-many)的关系的时候非常方便。举个简单的例子，如果一个工人有两个管理者，我们只需要像这样存一下数组:
 
 	db.employees.insert({_id: ObjectId(
 		"4d85c7039ab0fd70a117d733"),
@@ -425,14 +425,14 @@ Just because MongoDB doesn't have joins doesn't mean it doesn't have a few trick
 		ObjectId(
 		"4d85c7039ab0fd70a117d732")] })
 
-Of particular interest is that, for some documents, `manager` can be a scalar value, while for others it can be an array. Our original `find` query will work for both:
+有趣的是，对于某些文档，`manager` 可以是不同的值，而另外一些可以是数组。而我们原来的 `find` 查询依旧可用:
 
 	db.employees.find({manager: ObjectId(
 		"4d85c7039ab0fd70a117d730")})
 
-You'll quickly find that arrays of values are much more convenient to deal with than many-to-many join-tables.
+你会很快就发现，数组中的值比多对多链接表(many-to-many join-tables)要容易处理得多。
 
-Besides arrays, MongoDB also supports embedded documents. Go ahead and try inserting a document with a nested document, such as:
+数组之外，MongoDB 还支持内嵌文档。来试试看向文档插入一个内嵌文档，像这样:
 
 	db.employees.insert({_id: ObjectId(
 		"4d85c7039ab0fd70a117d734"),
@@ -442,14 +442,14 @@ Besides arrays, MongoDB also supports embedded documents. Go ahead and try inser
 			brother: ObjectId(
 		"4d85c7039ab0fd70a117d730")}})
 
-In case you are wondering, embedded documents can be queried using a dot-notation:
+像你猜的那样，内嵌文档可以用 dot-notation 查询:
 
 	db.employees.find({
 		'family.mother': 'Chani'})
 
-We'll briefly talk about where embedded documents fit and how you should use them.
+我们将简单的介绍一下内嵌文档适用情况，以及你怎么使用它们。
 
-Combining the two concepts, we can even embed arrays of documents:
+结合两个概念，我们甚至可以内嵌文档数组:
 	db.employees.insert({_id: ObjectId(
 		"4d85c7039ab0fd70a117d735"),
 		name: 'Chani',
