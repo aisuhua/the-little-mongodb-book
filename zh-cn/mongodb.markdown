@@ -538,12 +538,12 @@ The second, when atomic operations aren't enough, is to fall back to a two-phase
 MongoDB's support for nested documents and flexible schema design makes two-phase commits slightly less painful, but it still isn't a great process, especially when you are just getting started with it.
 
 ## Data Processing ##
-Before version 2.2 MongoDB relied on MapReduce for most data processing jobs. As of 2.2 it has added a powerful feature called  [aggregation framework or pipeline](http://docs.mongodb.org/manual/core/aggregation-pipeline/), so you'll only need to use MapReduce in rare cases where you need complex functions for aggregations that are not yet supported in the pipeline. In the next chapter we'll look at Aggregation Pipeline and MapReduce in detail. For now you can think of them as feature-rich and different ways to `group by` (which is an understatement).  For parallel processing of very large data, you may need to rely on something else, such as Hadoop. Thankfully, since the two systems really do complement each other, there's a [MongoDB connector for Hadoop](http://docs.mongodb.org/ecosystem/tools/hadoop/).
+在2.2 版本之前的 MongoDB 依赖 MapReduce 来解决大部分数据处理工作。在 2.2 版本，它追加了一个强力的功能，叫做 [aggregation framework or pipeline](http://docs.mongodb.org/manual/core/aggregation-pipeline/)，因此你只要对那些尚未支持管道的，需要使用复杂方法的，不常见的聚合使用 MapReduce。下一章我们将看看聚合管道和 MapReduce 的细节。现在，你可以把他们想象成功能强大的，用不同方法实现的 `group by` (打个比方)。对于非常大的数据的处理，你可能要用到其他的工具，比如 Hadoop。值得庆幸的是，这两个系统是相辅相成的，这里有个 [MongoDB connector for Hadoop](http://docs.mongodb.org/ecosystem/tools/hadoop/)。
 
-Of course, parallelizing data processing isn't something relational databases excel at either. There are plans for future versions of MongoDB to be better at handling very large sets of data.
+当然，关系型数据库也不擅长并行数据处理。MongoDB 有计划在未来的版本中，改善增加处理大数据集的能力。
 
 ## Geospatial ##
-A particularly powerful feature of MongoDB is its support for [geospatial indexes](http://docs.mongodb.org/manual/applications/geospatial-indexes/). This allows you to store either geoJSON or x and y coordinates within documents and then find documents that are `$near` a set of coordinates or `$within` a box or circle. This is a feature best explained via some visual aids, so I invite you to try the [5 minute geospatial interactive tutorial](http://mongly.openmymind.net/geo/index), if you want to learn more.
+一个很强大的功能就是 MongoDB 支持 [geospatial indexes](http://docs.mongodb.org/manual/applications/geospatial-indexes/)。这允许你保存 geoJSON 或者 x 和 y 坐标到文档，并查询文档，用如 `$near` 来获取坐标集，或者 `$within` 来获取一个矩形或圆中的点。这个特性最好通过一些可视化例子来演示，所以如果你想学更多的话，可以试试看 [5 minute geospatial interactive tutorial](http://mongly.openmymind.net/geo/index)。
 
 ## 工具和成熟度 ##
 你应该已经知道这个问题的答案了，MongoDB 确实比大多数的关系型数据要年轻很多。这个问题确实是你应当考虑的，但是到底有多重要，这取决于你要做什么，怎么做。不管怎么说，一个好的评估，不可能忽略 MongoDB 年轻这一事实，而可用的工具也不是很好 (虽然成熟的关系型数据库工具有些也非常渣!)。举个例子，它缺乏对十进制浮点数的支持，在处理货币的系统来说，明显是一个问题 (尽管也不是致命的) 。
