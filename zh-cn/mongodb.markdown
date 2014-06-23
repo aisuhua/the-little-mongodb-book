@@ -526,16 +526,16 @@ Prior to version 1.8, MongoDB did not have single-server durability. That is, a 
 Durability is only mentioned here because a lot has been made around MongoDB's past lack of single-server durability. This'll likely show up in Google searches for some time to come. Information you find about journaling being a missing feature is simply out of date.
 
 ## Full Text Search ##
-True full text search capability is a recent addition to MongoDB.  It supports fifteen languages with stemming and stop words. With MongoDB's support for arrays and full text search you will only need to look to other solutions if you need a more powerful and full-featured full text search engine.  
+真正的全文检索是在最近加入到 MongoDB 中的。它支持十五国语言，支持词形变化(stemming)和干扰字(stop words)。除了原生的 MongoDB 的全文检索支持，如果你需要一个更强大更全面的全文检索引擎的话，你需要另找方案。
 
 ## Transactions ##
-MongoDB doesn't have transactions. It has two alternatives, one which is great but with limited use, and the other that is cumbersome but flexible.
+MongoDB 不支持事务。这有两个代替案，一个很好用但有限制，另外一个比较麻烦但灵活。
 
-The first is its many atomic update operations. These are great, so long as they actually address your problem. We already saw some of the simpler ones, like `$inc` and `$set`. There are also commands like `findAndModify` which can update or delete a document and return it atomically.
+第一个方案，就是各种原子更新操作。只要能解决你的问题，都挺不错。我们已经看过几个简单的了，比如 `$inc` 和 `$set`。还有像 `findAndModify` 命令，可以更新或删除文档之后，自动返回修改过的文档。
 
-The second, when atomic operations aren't enough, is to fall back to a two-phase commit. A two-phase commit is to transactions what manual dereferencing is to joins. It's a storage-agnostic solution that you do in code. Two-phase commits are actually quite popular in the relational world as a way to implement transactions across multiple databases. The MongoDB website [has an example](http://docs.mongodb.org/manual/tutorial/perform-two-phase-commits/) illustrating the most typical example (a transfer of funds). The general idea is that you store the state of the transaction within the actual document being updated atomically and go through the init-pending-commit/rollback steps manually.
+第二个方案，当原子操作不能满足的时候，回到两段提交上来。对于事务，两段提交就好像给链接手工解引用。这是一个和存储无关的解决方案。两段提交实际上在关系型数据库世界中非常常用，用来实现多数据库之间的事务。 MongoDB 网站 [有个例子](http://docs.mongodb.org/manual/tutorial/perform-two-phase-commits/) 演示了最典型的场合 (资金转账)。通常的想法是，把事务的状态保存到实际的原子更新的文档中，然后手工的进行 init-pending-commit/rollback 处理。
 
-MongoDB's support for nested documents and flexible schema design makes two-phase commits slightly less painful, but it still isn't a great process, especially when you are just getting started with it.
+MongoDB 支持内嵌文档以及它灵活的 schema 设计，让两步提交没那么痛苦，但是它仍然不是一个好处理，特别是当你刚开始接触它的时候。
 
 ## Data Processing ##
 在2.2 版本之前的 MongoDB 依赖 MapReduce 来解决大部分数据处理工作。在 2.2 版本，它追加了一个强力的功能，叫做 [aggregation framework or pipeline](http://docs.mongodb.org/manual/core/aggregation-pipeline/)，因此你只要对那些尚未支持管道的，需要使用复杂方法的，不常见的聚合使用 MapReduce。下一章我们将看看聚合管道和 MapReduce 的细节。现在，你可以把他们想象成功能强大的，用不同方法实现的 `group by` (打个比方)。对于非常大的数据的处理，你可能要用到其他的工具，比如 Hadoop。值得庆幸的是，这两个系统是相辅相成的，这里有个 [MongoDB connector for Hadoop](http://docs.mongodb.org/ecosystem/tools/hadoop/)。
