@@ -467,9 +467,9 @@ For example, say you are writing a forum application. The traditional way to ass
 Adjusting to this kind of approach won't come easy to some. In a lot of cases it won't even make sense to do this. Don't be afraid to experiment with this approach though. It's not only suitable in some circumstances, but it can also be the best way to do it.
 
 ## 你的选择是？ ##
-Arrays of ids can be a useful strategy when dealing with one-to-many or many-to-many scenarios. But more commonly, new developers are left deciding between using embedded documents versus doing "manual" referencing.
+在处理一对多(one-to-many)或者多对多(many-to-many)场景的时候，id 数组通常是一个正确的选择。但通常，新的开发者在面对嵌入式文档和 "手工" 引用时，左右为难。
 
-First, you should know that an individual document is currently limited to 16 megabytes in size. Knowing that documents have a size limit, though quite generous, gives you some idea of how they are intended to be used. At this point, it seems like most developers lean heavily on manual references for most of their relationships. Embedded documents are frequently leveraged, but mostly for smaller pieces of data which we want to always pull with the parent document. A real world example may be to store an `addresses` documents with each user, something like:
+首先，你应该知道的是，一个独立文档的大小当前被限制在 16MB 。知道了文档的大小限制，虽然挺宽裕的，对你考虑怎么用它多少有些影响。在这点上，看起来大多数开发者都愿意手工维护它们的引用关系。嵌入式文档经常被用到，大多数情况下多是很小的数据块，那些总是被和父节点一起拉取的数据块。现实的例子是为每个用户保存一个 `addresses` ，看起来像这样:
 
 	db.users.insert({name: 'leto',
 		email: 'leto@dune.gov',
@@ -478,7 +478,7 @@ First, you should know that an individual document is currently limited to 16 me
 		           {street: "555 University",
 		            city: "Palo Alto", state:"CA",zip:"94107"}]})
 
-This doesn't mean you should underestimate the power of embedded documents or write them off as something of minor utility. Having your data model map directly to your objects makes things a lot simpler and often removes the need to join. This is especially true when you consider that MongoDB lets you query and index fields of an embedded documents and arrays.
+这并不意味着你要低估嵌入式文档的能力，或者仅仅把他们当成小技巧。把你的数据模型直接映射到你的对象，这会使得问题更简单，并且通常也不需要用到链接了。尤其是，当你考虑到 MongoDB 允许你对嵌入式文档和数组的字段进行查询和索引时，效果特别明显。
 
 ## 大而全还是小而专的集合？ ##
 由于对集合没做任何的强制要求，完全可以在系统中用一个混合了各种文档的集合，但这绝对是个非常烂的主意。大多数 MongoDB 系统都采用了和关系型数据库类似的结构，分成几个集合。换而言之，如果在关系型数据库中是一个表，那么在 MongoDB 中会被作成一个集合 (many-to-many join tables being an important exception as well as tables that exist only to enable one to many relationships with simple entities)。
