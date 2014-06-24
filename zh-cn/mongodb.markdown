@@ -343,7 +343,7 @@ You might expect to find all of your precious unicorns to be vaccinated. To get 
 除了 `_id` 字段，你不能把检索和排除混合使用。仔细想想，这是有道理的。你只能显式的检索或者排除某些字段。
 
 ## 排序(Ordering) ##
-到目前位置我已经提到好多次关于 `find` 返回的是一个游标，直到需要的时候才会执行。但是，你在 shell 中看确实到的是 `find` 被立刻执行了。这只是 shell 的行为。 我们可以通过一个 `find` 的链式方法，观察到 `cursors` 的真正行为。我们来看看 `sort`。我们指定我们希望排序的字段，用一个 JSON 串，其中 1 表示升序 -1 表示降序。比如:
+到目前位置我已经提到好多次， `find` 返回的是一个游标，它只有在需要的时候才会执行。但是，你在 shell 中看确实到的是 `find` 被立刻执行了。这只是 shell 的行为。 我们可以通过一个 `find` 的链式方法，观察到 `cursors` 的真正行为。我们来看看 `sort`。我们指定我们希望排序的字段，以 JSON 方式，其中 1 表示升序 -1 表示降序。比如:
 
 	//heaviest unicorns first
 	db.unicorns.find().sort({weight: -1})
@@ -352,10 +352,10 @@ You might expect to find all of your precious unicorns to be vaccinated. To get 
 	db.unicorns.find().sort({name: 1,
 		vampires: -1})
 
-就像关系型数据库那样，MongoDB 允许对索引进行排序。我们再稍后将详细讨论索引。然而，你应该知道的是，MongoDB 对未经索引的字段进行排序是有大小限制的。也就是说，如果你试图对一个非常大的没有经过索引的结果集进行排序的话，你会得到个异常。有些人认为这是一个缺点。说实话，我是多希望更多的数据库可以有这种能力去拒绝未经优化的查询。(我不是把每个 MongoDB 的缺点都说成优点，但是我已经看够了那些缺乏优化的数据库了，我真心希望他们能有一个 strict-mode。)
+就像关系型数据库那样，MongoDB 允许对索引进行排序。我们再稍后将详细讨论索引。那，你应该知道的是，MongoDB 对未经索引的字段进行排序是有大小限制的。就是说，如果你试图对一个非常大的没有经过索引的结果集进行排序的话，你会得到个异常。有些人认为这是一个缺点。说实话，我是多希望更多的数据库可以有这种能力去拒绝未经优化的查询。(我不是把每个 MongoDB 的缺点硬说成优点，但是我已经看够了那些缺乏优化的数据库了，我真心希望他们能有一个 strict-mode。)
 
 ## 分页(Paging) ##
-对结果分页可以通过 `limit` 和 `skip` 游标方法来实现。要获取第二和第三重的独角兽，我们可以这样:
+对结果分页可以通过 `limit` 和 `skip` 游标方法来实现。比如要获取第二和第三重的独角兽，我们可以这样:
 
 	db.unicorns.find()
 		.sort({weight: -1})
