@@ -509,17 +509,17 @@ For me, the real benefit of dynamic schema is the lack of setup and the reduced 
 Think about it from the perspective of a driver developer. You want to save an object? Serialize it to JSON (technically BSON, but close enough) and send it to MongoDB. There is no property mapping or type mapping. This straightforwardness definitely flows to you, the end developer.
 
 ## Writes ##
-One area where MongoDB can fit a specialized role is in logging. There are two aspects of MongoDB which make writes quite fast. First, you have an option to send a write command and have it return immediately without waiting for the write to be acknowledged. Secondly, you can control the write behavior with respect to data durability. These settings, in addition to specifying how many servers should get your data before being considered successful, are configurable per-write, giving you a great level of control over write performance and data durability.
+MongoDB 可以胜任的一个特殊角色是在日志领域。有两点使得 MongoDB 的写操作非常快。首先，你可以选择发送了写操作命令之后立刻返回，而无须等到操作完成。其次，你可以控制数据持久性的写行为。这些设置，加上，可以指定一个成功的提交需要在多少台服务器上拿到你的数据，每个写操作都是可设置, 这给予你很高的权限用以控制写性能和数据持久性。
 
-In addition to these performance factors, log data is one of those data sets which can often take advantage of schema-less collections. Finally, MongoDB has something called a [capped collection](http://docs.mongodb.org/manual/core/capped-collections/). So far, all of the implicitly created collections we've created are just normal collections. We can create a capped collection by using the `db.createCollection` command and flagging it as capped:
+除了这些性能因素，日志数据还是这样一种数据集，用无模式集合更有优势。最后，MongoDB 还提供了 [受限集合(capped collection)](http://docs.mongodb.org/manual/core/capped-collections/)。到目前位置，所有我们默认创建的集合都是普通集合。我们可以通过 `db.createCollection` 命令来创建一个受限集合并标记它的限制:
 
 	//limit our capped collection to 1 megabyte
 	db.createCollection('logs', {capped: true,
 		size: 1048576})
 
-When our capped collection reaches its 1MB limit, old documents are automatically purged. A limit on the number of documents, rather than the size, can be set using `max`. Capped collections have some interesting properties. For example, you can update a document but it can't change in size. The insertion order is preserved, so you don't need to add an extra index to get proper time-based sorting.  You can "tail" a capped collection the way you tail a file in Unix via `tail -f <filename>` which allows you to get new data as it arrives, without having to re-query it.
+当我们的受限集合到达 1MB 上限的时候，旧文档会被自动清除。另外一种限制可以基于文档个数，而不是大小，用 `max` 标记。受限集合有一些非常有趣的属性。比如说，你可以更新文档但是你不能改变它的大小。插入顺序是被设置好了的，因此不需要另外提供一个索引来获取基于时间的排序，你可以 "tail" 一个受限集合，就和你在 Unix 中通过 `tail -f <filename>` 来处理文件一样，获取最新的数据，如果有的话，而不需要重新查询它。
 
-If you want to "expire" your data based on time rather than overall collection size, you can use [TTL Indexes](http://docs.mongodb.org/manual/tutorial/expire-data/) where TTL stands for "time-to-live".
+如果想让你的数据 "过期" ，基于时间而不是整个集合的大小，你可以用 [TTL Indexes](http://docs.mongodb.org/manual/tutorial/expire-data/) ，所谓 TTL 是 "time-to-live" 的缩写。
 
 ## Durability ##
 在 1.8 之前的版本，MongoDB 不支持单服务器持久性。就是说，如果一个服务器崩溃了，可能会导致数据的丢失或者损坏。解决案是在多服务器上运行 MongoDB 副本 (MongoDB 支持复制)。日志(Journaling)是 1.8 版追加的一个非常重要的功能。从 2.0 版的 MongoDB 开始，日志是默认启动的，该功能允许快速恢复服务器，如果遭遇到了服务器崩溃或者停电的情况。   
