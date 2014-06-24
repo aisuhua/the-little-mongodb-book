@@ -490,14 +490,14 @@ This doesn't mean you should underestimate the power of embedded documents or wr
 ## 小结 ##
 本章目标是提供一些对你在 MongoDB 中数据建模有帮助的指导, 一个新起点，如果愿意你可以这样认为。在一个面向文档系统中建模，和在面向关系世界中建模，是不一样的，但也没多少不同。你能得到更多的灵活性并且只有一个约束，而对于新系统，一切都很完美。你唯一会做错的就是你不去尝试。
 
-# 第五章 - MongoDB 使用场景 #
-By now you should have a feel for where and how MongoDB might fit into your existing system. There are enough new and competing storage technologies that it's easy to get overwhelmed by all of the choices.
+# 第五章 - MongoDB 适用场景 #
+现在你应该有感觉，何时何地把 MongoDB 融入你现有的系统是最棒的了。这有超多的新的类似的存储技术，肯定会让你在选择的时候晕头转向。
 
-For me, the most important lesson, which has nothing to do with MongoDB, is that you no longer have to rely on a single solution for dealing with your data. No doubt, a single solution has obvious advantages, and for a lot projects - possibly even most - a single solution is the sensible approach. The idea isn't that you *must* use different technologies, but rather that you *can*. Only you know whether the benefits of introducing a new solution outweigh the costs.
+对我来说，最重要的教训，跟 MongoDB 无关，是说你不用再依赖单一的解决案来处理你的数据了。毫无疑问，一个单一的解决案有明显的优势，对于许多项目来说 - 或者说大多数 - 单一解决案是一个明智的选择。意思不是说你 *必须* 使用不同的技术，而是说你 *可以*。 只有你自己才知道，引进新技术是否利大于弊。
 
-With that said, I'm hopeful that what you've seen so far has made you see MongoDB as a general solution. It's been mentioned a couple times that document-oriented databases share a lot in common with relational databases. Therefore, rather than tiptoeing around it, let's simply state that MongoDB should be seen as a direct alternative to relational databases. Where one might see Lucene as enhancing a relational database with full text indexing, or Redis as a persistent key-value store, MongoDB is a central repository for your data.
+说了那么多，我希望你到目前为止学到知识让你觉得 MongoDB 是一个通用的解决案。我们已经提到很多次了，面向文档的数据库和关系型数据库有很多方面类似。因此，与其绕开这些相同点，不如我们可以简单的这样认为， MongoDB 是关系型数据库的一个代替案。比如说用 Lucene 作为关系型数据库的全文检索索引的加强，或者用 Redis 作为持久型 key-value 存储，MongoDB 就是用来保存你的数据的。
 
-Notice that I didn't call MongoDB a *replacement* for relational databases, but rather an *alternative*. It's a tool that can do what a lot of other tools can do. Some of it MongoDB does better, some of it MongoDB does worse. Let's dissect things a little further.
+注意，我没有说用 MongoDB *取代* 关系型数据库，而是 *代替* 案。它能做的有很多工具也能做。有些事情 MongoDB 可以做的更好，另外一些 MongoDB 做得差点。我们来进一步来讨论一下。
 
 ## Flexible Schema ##
 面向文档数据库经常吹嘘的一个好处就是，它不需要一个固定的模式。这使得他们比传统的数据库表要灵活得多。我同意无模式是一个很不错的特性，但不是大多数人说的那样。
