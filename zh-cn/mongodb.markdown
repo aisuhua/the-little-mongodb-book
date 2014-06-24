@@ -467,9 +467,9 @@ For example, say you are writing a forum application. The traditional way to ass
 Adjusting to this kind of approach won't come easy to some. In a lot of cases it won't even make sense to do this. Don't be afraid to experiment with this approach though. It's not only suitable in some circumstances, but it can also be the best way to do it.
 
 ## 你的选择是？ ##
-在处理一对多(one-to-many)或者多对多(many-to-many)场景的时候，id 数组通常是一个正确的选择。但通常，新的开发者在面对嵌入式文档和 "手工" 引用时，左右为难。
+在处理一对多(one-to-many)或者多对多(many-to-many)场景的时候，id 数组通常是一个正确的选择。但通常，新人开发者在面对嵌入式文档和 "手工" 引用时，左右为难。
 
-首先，你应该知道的是，一个独立文档的大小当前被限制在 16MB 。知道了文档的大小限制，虽然挺宽裕的，对你考虑怎么用它多少有些影响。在这点上，看起来大多数开发者都愿意手工维护它们的引用关系。嵌入式文档经常被用到，大多数情况下多是很小的数据块，那些总是被和父节点一起拉取的数据块。现实的例子是为每个用户保存一个 `addresses` ，看起来像这样:
+首先，你应该知道的是，一个独立文档的大小当前被限制在 16MB 。知道了文档的大小限制，挺宽裕的，对你考虑怎么用它多少有些影响。在这点上，看起来大多数开发者都愿意手工维护数据引用关系。嵌入式文档经常被用到，大多数情况下多是很小的数据块，那些总是被和父节点一起拉取的数据块。现实的例子是为每个用户保存一个 `addresses` ，看起来像这样:
 
 	db.users.insert({name: 'leto',
 		email: 'leto@dune.gov',
