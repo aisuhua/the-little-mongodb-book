@@ -460,11 +460,11 @@ MongoDB 不支持链接不意味着它没优势。还记得我们说过 MongoDB 
 
 
 ## 反规范化(Denormalization) ##
-Yet another alternative to using joins is to denormalize your data. Historically, denormalization was reserved for performance-sensitive code, or when data should be snapshotted (like in an audit log). However, with the ever-growing popularity of NoSQL, many of which don't have joins, denormalization as part of normal modeling is becoming increasingly common. This doesn't mean you should duplicate every piece of information in every document. However, rather than letting fear of duplicate data drive your design decisions, consider modeling your data based on what information belongs to what document.
+另外一个代替链接的方案是对你的数据做反规范化处理(denormalization)。从历史角度看，反规范化处理是为了解决那些对性能敏感的问题，或是需要做快照的数据(比如说审计日志)。但是，随着日益增长的普及的 NoSQL，对链接的支持的日益丧失，反规范化作为规范化建模的一部分变得越来越普遍了。这不意味着，应该对你文档里的每条数据都做冗余处理。而是说，与其对冗余数据心存恐惧，让它影响你的设计决策，不如在建模的时候考虑什么信息应当属于什么文档。
 
-For example, say you are writing a forum application. The traditional way to associate a specific `user` with a `post` is via a `userid` column within `posts`. With such a model, you can't display `posts` without retrieving (joining to) `users`. A possible alternative is simply to store the `name` as well as the `userid` with each `post`. You could even do so with an embedded document, like `user: {id: ObjectId('Something'), name: 'Leto'}`. Yes, if you let users change their name, you may have to update each document (which is one multi-update).
+比如说，假设你要写一个论坛应用。传统的方式是通过 `posts` 中的 `userid` 列，来关联一个特定的 `user` 和一篇 `post` 。这样的建模，你没法在显示 `posts` 的时候不查询 (链接到) `users`。一个代替案是简单的在每篇 `post` 中把 `name` 和 `userid` 一起保存。你可能要用到嵌入式文档，比如 `user: {id: ObjectId('Something'), name: 'Leto'}`。是的，如果你让用户可以更新他们的名字，那么你得对所有的文档都进行更新(一个多重更新)。
 
-Adjusting to this kind of approach won't come easy to some. In a lot of cases it won't even make sense to do this. Don't be afraid to experiment with this approach though. It's not only suitable in some circumstances, but it can also be the best way to do it.
+适应这种方法不是对任何人都那么简单的。很多情况下这样做甚至是无意义的。不过不要害怕去尝试。它只是在某些情况下不适用而已，但在某些情况下是最好的解决方法。
 
 ## 你的选择是？ ##
 在处理一对多(one-to-many)或者多对多(many-to-many)场景的时候，id 数组通常是一个正确的选择。但通常，新人开发者在面对嵌入式文档和 "手工" 引用时，左右为难。
