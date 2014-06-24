@@ -331,19 +331,19 @@ You might expect to find all of your precious unicorns to be vaccinated. To get 
 本章中我们介绍了集合的基本 CRUD 操作。我们详细讲解了 `update` 及它的三个有趣的行为。 首先，如果你传 MongoDB 一个文档但是不带更新操作, MongoDB 的 `update` 会默认替换现有文档。因此，你通常要用到 `$set` 操作 (或者其他各种可用的用于修改文档的操作)。 其次， `update` 支持 `upsert` 操作，当你不知道文档是否存在的时候，非常有用。 最后，默认情况下， `update` 只更新第一个匹配文档，因此当你希望更新所有匹配文档时，你要用 `multi` 。
 
 # 第三章 - 掌握查询 #
-Chapter 1 provided a superficial look at the `find` command. There's more to `find` than understanding `selectors` though. We already mentioned that the result from `find` is a `cursor`. We'll now look at exactly what this means in more detail.
+在第一章中我们对 `find` 命令做了一个初步的了解。除了理解成 `selectors` 以外 `find` 还有更丰富的功能。我们已经说过，`find` 返回的结果是一个 `cursor`。我们将进一步看看它到底是什么意思。
 
 ## 字段选择 ##
-Before we jump into `cursors`, you should know that `find` takes a second optional parameter called "projection". This parameter is the list of fields we want to retrieve or exclude. For example, we can get all of the unicorns' names without getting back other fields by executing:
+在开始 `cursors` 的话题之前，你应该知道 `find` 有第二个可选参数，叫做 "projection"。这个参数是我们要检索或者排除字段的列表。比如，我们可以仅查询返回独角兽的名字而不带别的字段:
 
 	db.unicorns.find({}, {name: 1});
 
-By default, the `_id` field is always returned. We can explicitly exclude it by specifying `{name:1, _id: 0}`.
+默认的，`_id` 字段总是会返回的。我们可以通过这样显式的把它从返回结果中排除 `{name:1, _id: 0}`。
 
-Aside from the `_id` field, you cannot mix and match inclusion and exclusion. If you think about it, that actually makes sense. You either want to select or exclude one or more fields explicitly.
+除了 `_id` 字段，你不能把检索和排除混合使用。仔细想想，这是有道理的。你只能显式的检索或者排除某些字段。
 
 ## 排序(Ordering) ##
-A few times now I've mentioned that `find` returns a cursor whose execution is delayed until needed. However, what you've no doubt observed from the shell is that `find` executes immediately. This is a behavior of the shell only. We can observe the true behavior of `cursors` by looking at one of the methods we can chain to `find`. The first that we'll look at is `sort`. We specify the fields we want to sort on as a JSON document, using 1 for ascending and -1 for descending. For example:
+到目前位置我已经提到好多次关于 `find` 返回的是一个游标，直到需要的时候才会执行。但是，你在 shell 中看确实到的是 `find` 被立刻执行了。这只是 shell 的行为。 我们可以通过一个 `find` 的链式方法，观察到 `cursors` 的真正行为。我们来看看 `sort`。我们指定我们希望排序的字段，用一个 JSON 串，其中 1 表示升序 -1 表示降序。比如:
 
 	//heaviest unicorns first
 	db.unicorns.find().sort({weight: -1})
@@ -352,24 +352,24 @@ A few times now I've mentioned that `find` returns a cursor whose execution is d
 	db.unicorns.find().sort({name: 1,
 		vampires: -1})
 
-As with a relational database, MongoDB can use an index for sorting. We'll look at indexes in more detail later on. However, you should know that MongoDB limits the size of your sort without an index. That is, if you try to sort a very large result set which can't use an index, you'll get an error. Some people see this as a limitation. In truth, I wish more databases had the capability to refuse to run unoptimized queries. (I won't turn every MongoDB drawback into a positive, but I've seen enough poorly optimized databases that I sincerely wish they had a strict-mode.)
+就像关系型数据库那样，MongoDB 允许对索引进行排序。我们再稍后将详细讨论索引。然而，你应该知道的是，MongoDB 对未经索引的字段进行排序是有大小限制的。也就是说，如果你试图对一个非常大的没有经过索引的结果集进行排序的话，你会得到个异常。有些人认为这是一个缺点。说实话，我是多希望更多的数据库可以有这种能力去拒绝未经优化的查询。(我不是把每个 MongoDB 的缺点都说成优点，但是我已经看够了那些缺乏优化的数据库了，我真心希望他们能有一个 strict-mode。)
 
 ## 分页(Paging) ##
-Paging results can be accomplished via the `limit` and `skip` cursor methods. To get the second and third heaviest unicorn, we could do:
+对结果分页可以通过 `limit` 和 `skip` 游标方法来实现。要获取第二和第三重的独角兽，我们可以这样:
 
 	db.unicorns.find()
 		.sort({weight: -1})
 		.limit(2)
 		.skip(1)
 
-Using `limit` in conjunction with `sort`, can be a way to avoid running into problems when sorting on non-indexed fields.
+通过 `limit` 和 `sort` 的配合，可以在对非索引字段进行排序时避免引起问题。
 
 ## 计数(Count) ##
-The shell makes it possible to execute a `count` directly on a collection, such as:
+shell 中可以直接对一个集合执行 `count` ，像这样:
 
 	db.unicorns.count({vampires: {$gt: 50}})
 
-In reality, `count` is actually a `cursor` method, the shell simply provides a shortcut. Drivers which don't provide such a shortcut need to be executed like this (which will also work in the shell):
+实际上，`count` 是一个 `cursor` 的方法，shell 只是简单的提供了一个快捷方式。以不提供快捷方式的方法来执行的时候需要这样(在 shell 中同样可以执行):
 
 	db.unicorns.find({vampires: {$gt: 50}})
 		.count()
