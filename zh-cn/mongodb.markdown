@@ -30,44 +30,44 @@ Karl 在 [the-little-mongodb-book](https://github.com/karlseguin/the-little-mong
 # 简介 #
  > 这章那么短不是我的错，MongoDB 就真的很易学。
 
-It is often said that technology moves at a blazing pace. It's true that there is an ever growing list of new technologies and techniques being released. However, I've long been of the opinion that the fundamental technologies used by programmers move at a rather slow pace. One could spend years learning little yet remain relevant. What is striking though is the speed at which established technologies get replaced. Seemingly overnight, long-established technologies find themselves threatened by shifts in developer focus.
+都说技术在飞速发展。确实，有接连不断的新技术新方法出现。但是，我一直认为，程序员用到的基础技术的发展却是相当缓慢的。你可以好几年不学习但还能混得下去。令人惊讶的其实是成熟技术的被替换速度。就像在一夜之间，那些长期稳定成熟的技术发现它们不再被开发者关注。
 
-Nothing could be more representative of this sudden shift than the progress of NoSQL technologies against well-established relational databases. It almost seems like one day the web was being driven by a few RDBMSs, and the next, five or so NoSQL solutions had established themselves as worthy solutions.
+最好的例子就是 NoSQL 技术的发展，以及它对稳定的关系型数据库的代替了。看起来就像，昨天网络还是由 RDBMS 们来驱动的，而今天，就冒出五种左右的 NoSQL 解决案已经证明了他们都是有价值的了。
 
-Even though these transitions seem to happen overnight, the reality is that they can take years to become accepted practice. The initial enthusiasm is driven by a relatively small set of developers and companies. Solutions are refined, lessons learned and seeing that a new technology is here to stay, others slowly try it for themselves. Again, this is particularly true in the case of NoSQL where many solutions aren't replacements for more traditional storage solutions, but rather address a specific need in addition to what one might get from traditional offerings.
+虽然这些转变看起来都是一夜之间发生的，实际上他们他们可能花了数年的时间来取得公众的认可。最开始是由一小波开发者和公司在推动。解决案被不断重制，吸取教训，然后一个新技术就这样诞生了，慢慢的后来者也开始了尝试。再次重申，可以这样说 NoSQL 的许多解决案并不是为了取代传统的存储案，而是作为传统解决案的一种特殊需求，填补了传统解决案的一些空白。
 
-Having said all of that, the first thing we ought to do is explain what is meant by NoSQL. It's a broad term that means different things to different people. Personally, I use it very broadly to mean a system that plays a part in the storage of data. Put another way, NoSQL (again, for me), is the belief that your persistence layer isn't necessarily the responsibility of a single system. Where relational database vendors have historically tried to position their software as a one-size-fits-all solution, NoSQL leans towards smaller units of responsibility where the best tool for a given job can be leveraged. So, your NoSQL stack might still leverage a relational database, say MySQL, but it'll also contain Redis as a persistence lookup for specific parts of the system as well as Hadoop for your intensive data processing. Put simply, NoSQL is about being open and aware of alternative, existing and additional patterns and tools for managing your data.
+说了那么多，我们第一件应该解决的事情是解释一下什么是 NoSQL。它是一个宽松的概念，不同的人有不同的见解。就个人而言，我通常认为它是数据存储系统的一部分。换而言之，NoSQL (重申, 就我而言)，的好处是让你的持久层不需要一个独立的系统。历史上，传统的关系数据库厂商尝试把他们的产品当作一揽子解决方案，NoSQL 倾向于扮演，在给定的工作中充当最好的工具，这种角色。因此，你的 NoSQL 架构中还是可以用到关系型数据库，比如说 MySQL，但是可以用到 Redis 作为系统中某部分的持久层，或者是用到 Hadoop 来处理大数据。简而言之，NoSQL 就是需要用开放的可代替的意识，使用现有的或者未来的，方式和工具来管理你的数据。
 
-You might be wondering where MongoDB fits into all of this. As a document-oriented database, MongoDB is a more generalized NoSQL solution. It should be viewed as an alternative to relational databases. Like relational databases, it too can benefit from being paired with some of the more specialized NoSQL solutions. MongoDB has advantages and drawbacks, which we'll cover in later parts of this book.
+你会想知道，MongoDB 是不是适用于这一切。作为一个面向文档数据库，MongoDB 是最通用的 NoSQL 解决案。它可以看成是关系型数据库的代替案。和关系型数据库一样，它也可以和其他的 NoSQL 解决案搭配在一起，更好的工作。MongoDB 有优点也有缺点，我们将会在本书后面的章节中介绍。
 
-As you may have noticed, we use the terms MongoDB and Mongo interchangeably.
+如你所见，我们混用了 MongoDB 和 Mongo 两个术语。
 
 # 开始 #
-Most of this book will focus on core MongoDB functionality. We'll therefore rely on the MongoDB shell. While the shell is useful to learn as well as being a useful administrative tool, your code will use a MongoDB driver.
+本书大部分内容将会专注于 MongoDB 的核心功能。我们会用到 MongoDB 的 shell。因为 shell 不但有助于学习，而且还是个很有用的管理工具。实际代码中你需要用到 MongoDB 驱动。
 
-This does bring up the first thing you should know about MongoDB: its drivers. MongoDB has a [number of official drivers](http://docs.mongodb.org/ecosystem/drivers/) for various languages. These drivers can be thought of as the various database drivers you are probably already familiar with. On top of these drivers, the development community has built more language/framework-specific libraries. For example, [NoRM](https://github.com/atheken/NoRM) is a C# library which implements LINQ, and [MongoMapper](https://github.com/jnunemaker/mongomapper) is a Ruby library which is ActiveRecord-friendly. Whether you choose to program directly against the core MongoDB drivers or some higher-level library is up to you. I point this out only because many people new to MongoDB are confused as to why there are both official drivers and community libraries - the former generally focuses on core communication/connectivity with MongoDB and the latter with more language and framework-specific implementations.
+这也引出了关于 MongoDB 你所需要知道的第一件事: 它的驱动。MongoDB 有各种语言的 [官方驱动](http://docs.mongodb.org/ecosystem/drivers/)。这些驱动可以认为是和你所熟悉的各种数据库驱动一样的东西。基于这些驱动，开发社区又创建了更多的语言/框架相关库。比如说，[NoRM](https://github.com/atheken/NoRM) 是一个 C# 语言库，用 LINQ 实现,而 [MongoMapper](https://github.com/jnunemaker/mongomapper) 是一个 Ruby 库，ActiveRecord-friendly。你可以选择直接对 MongoDB 核心进行开发，或选择高级库。之所以要指出，是因为许多新手都觉得迷惑，为什么这里有官方版本和社区版本 - 前者通常关心和 MongoDB 核心的通讯/链接，而后者有更多的语言和框架的实现。
 
-As you read through this, I encourage you to play with MongoDB to replicate what I demonstrate as well as to explore questions that you might come up with on your own. It's easy to get up and running with MongoDB, so let's take a few minutes now to set things up.
+说到这，我希望你可以在 MongoDB 环境中尝试一下我的例子，并且在尝试解决可能遇到的问题。MongoDB 很容易安装和运行，所以让我们花几分钟把所有的东西运行起来。
 
-1. Head over to the [official download page](http://www.mongodb.org/downloads) and grab the binaries from the first row (the recommended stable version) for your operating system of choice. For development purposes, you can pick either 32-bit or 64-bit.
+1. 先打开 [official download page](http://www.mongodb.org/downloads) ，从你的操作系统的下面的第一行(推荐稳定版本)下载二进制文件。根据开发实际，你可以选择 32位 或者 64位。
 
-2. Extract the archive (wherever you want) and navigate to the `bin` subfolder. Don't execute anything just yet, but know that `mongod` is the server process and `mongo` is the client shell - these are the two executables we'll be spending most of our time with.
+2. 解压缩文件 (随便你放哪) 然后进入 `bin` 子目录。现在还不要执行任何命令，只要记住 `mongod` 用来打开服务进程，`mongo` 是客户端 shell - 大部分时间我们将要使用这两个可执行文件。
 
-3. Create a new text file in the `bin` subfolder named `mongodb.config`.
+3. 在 `bin` 子目录下创建一个文本文件，命名为 `mongodb.config`。
 
-4. Add a single line to your mongodb.config: `dbpath=PATH_TO_WHERE_YOU_WANT_TO_STORE_YOUR_DATABASE_FILES`. For example, on Windows you might do `dbpath=c:\mongodb\data` and on Linux you might do `dbpath=/var/lib/mongodb/data`.
+4. 在 mongodb.config 中添加一行: `dbpath=PATH_TO_WHERE_YOU_WANT_TO_STORE_YOUR_DATABASE_FILES`。比如，在 Windows 你可以写 `dbpath=c:\mongodb\data` ，在 Linux 可能是 `dbpath=/var/lib/mongodb/data`。
 
-5. Make sure the `dbpath` you specified exists.
+5. 确保你指定的 `dbpath` 确实存在。
 
-6. Launch mongod with the `--config /path/to/your/mongodb.config` parameter.
+6. 执行 mongod ，带上参数 `--config /path/to/your/mongodb.config` 。
 
-As an example for Windows users, if you extracted the downloaded file to `c:\mongodb\` and you created `c:\mongodb\data\` then within `c:\mongodb\bin\mongodb.config` you would specify `dbpath=c:\mongodb\data\`. You could then launch `mongod` from a command prompt via `c:\mongodb\bin\mongod --config c:\mongodb\bin\mongodb.config`.
+以 Windows 用户为例，如果你解压下载文档到 `c:\mongodb\` ，并且你创建了 `c:\mongodb\data\` ,那么在 `c:\mongodb\bin\mongodb.config` 你要指定 `dbpath=c:\mongodb\data\`。 然后你可以在 CMD 执行 `mongod` 如下命令行 `c:\mongodb\bin\mongod --config c:\mongodb\bin\mongodb.config`。
 
-Feel free to add the `bin` folder to your path to make all of this less verbose. MacOSX and Linux users can follow almost identical directions. The only thing you should have to change are the paths.
+为省心你可以把 `bin` 文件夹路径添加到环境变量 PATH 中，可以简化命令。MacOSX 和 Linux 用户方法几乎一样。唯一需要改变的是路径。
 
-Hopefully you now have MongoDB up and running. If you get an error, read the output carefully - the server is quite good at explaining what's wrong.
+希望你现在已经可以启动 MongoDB 了。如果出现异常，仔细阅读一下异常信息 - 服务器对异常的解释做得非常好。
 
-You can now launch `mongo` (without the *d*) which will connect a shell to your running server. Try entering `db.version()` to make sure everything's working as it should. Hopefully you'll see the version number you installed.
+现在你可以执行 `mongo` (没有 *d*) ，链接 shell 到你的服务器上了。尝试输入 `db.version()` 来确认所有都正确执行了。你应该能拿到一个已安装的版本号。
 
 # 第一章 - 基础知识 #
 We begin our journey by getting to know the basic mechanics of working with MongoDB. Obviously this is core to understanding MongoDB, but it should also help us answer higher-level questions about where MongoDB fits.
