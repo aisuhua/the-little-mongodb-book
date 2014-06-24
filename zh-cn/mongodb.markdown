@@ -500,13 +500,13 @@ With that said, I'm hopeful that what you've seen so far has made you see MongoD
 Notice that I didn't call MongoDB a *replacement* for relational databases, but rather an *alternative*. It's a tool that can do what a lot of other tools can do. Some of it MongoDB does better, some of it MongoDB does worse. Let's dissect things a little further.
 
 ## Flexible Schema ##
-An oft-touted benefit of document-oriented database is that they don't enforce a fixed schema. This makes them much more flexible than traditional database tables. I agree that flexible schema is a nice feature, but not for the main reason most people mention.
+面向文档数据库经常吹嘘的一个好处就是，它不需要一个固定的模式。这使得他们比传统的数据库表要灵活得多。我同意无模式是一个很不错的特性，但不是大多数人说的那样。
 
-People talk about schema-less as though you'll suddenly start storing a crazy mishmash of data. There are domains and data sets which can really be a pain to model using relational databases, but I see those as edge cases. Schema-less is cool, but most of your data is going to be highly structured. It's true that having an occasional mismatch can be handy, especially when you introduce new features, but in reality it's nothing a nullable column probably wouldn't solve just as well.
+人们讲到无模式的时候，好像你就会把一堆乱七八糟的数据统统存起来一样。确实有些领域有些数据用关系型数据库来建模很痛苦，不过我觉得这些都是不常见的特例。无模式是酷，可是大多数情况下你的数据结构还是应当好好设计的。真正需要处理混乱时是不错，比如当你添加一个新功能的时候，不过事实是，大多数情况下，一个空列基本可以解决问题。
 
-For me, the real benefit of dynamic schema is the lack of setup and the reduced friction with OOP. This is particularly true when you're working with a static language. I've worked with MongoDB in both C# and Ruby, and the difference is striking. Ruby's dynamism and its popular ActiveRecord implementations already reduce much of the object-relational impedance mismatch. That isn't to say MongoDB isn't a good match for Ruby, it really is. Rather, I think most Ruby developers would see MongoDB as an incremental improvement, whereas C# or Java developers would see a fundamental shift in how they interact with their data.
+对我来说，动态模式的真正好处在于无需很多设置以及可以降低在 OOP 中使用的阻力。这在你使用静态语言的时候尤其明显。我在 C# 和 Ruby 中用过 MongoDB ，差异非常明显。Ruby 的动态特性以及它的流行的 ActiveRecord 实现，已经大幅降低面向对象/关系开发之间差异所带来的阻力。这不是说 MongoDB 和 Ruby 不配，而是是说它们太配了。真的，我觉得许多 Ruby 开发者眼中的的 MongoDB 只是有些许改进而已，而在 C# 或者 Java 开发者眼中，MongoDB 带来的是处理数据交互方式的翻天覆地变化。
 
-Think about it from the perspective of a driver developer. You want to save an object? Serialize it to JSON (technically BSON, but close enough) and send it to MongoDB. There is no property mapping or type mapping. This straightforwardness definitely flows to you, the end developer.
+假设从驱动开发者角度来看这个问题。你想保存一个对象？把它串行化成 JSON (严格来说是 BSON, 不错差不多) 然后把它传给 MongoDB。不需要做任何属性映射或者类型映射。这种简单性的好处就这样传递给了你，终端开发者。
 
 ## Writes ##
 MongoDB 可以胜任的一个特殊角色是在日志领域。有两点使得 MongoDB 的写操作非常快。首先，你可以选择发送了写操作命令之后立刻返回，而无须等到操作完成。其次，你可以控制数据持久性的写行为。这些设置，加上，可以指定一个成功的提交需要在多少台服务器上拿到你的数据，每个写操作都是可设置, 这给予你很高的权限用以控制写性能和数据持久性。
