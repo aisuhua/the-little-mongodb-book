@@ -293,21 +293,21 @@ MongoDB 为我们的 `_id` 字段生成的 `ObjectId` 可以这样查询:
 MongoDB 手册的 [Update Operators](http://docs.mongodb.org/manual/reference/operator/update/#update-operators) 这章，可以查到更多可用的更新操作符的信息。
 
 ## Upserts ##
-One of the more pleasant surprises of using `update` is that it fully supports `upserts`. An `upsert` updates the document if found or inserts it if not. Upserts are handy to have in certain situations and when you run into one, you'll know it. To enable upserting we pass a third parameter to update `{upsert:true}`.
+用 `update` 还有一个最大的惊喜，就是它完全支持 `upserts`。所谓 `upsert` 更新，即在文档中找到匹配值时更新它，无匹配时向文档插入新值，你可以这样理解。要使用 upsert 我们需要向 update 写入第三个参数 `{upsert:true}`。
 
-A mundane example is a hit counter for a website. If we wanted to keep an aggregate count in real time, we'd have to see if the record already existed for the page, and based on that decide to run an update or insert. With the upsert option omitted (or set to false), executing the following won't do anything:
+一个最常见的例子是网站点击计数器。如果我们想保存一个实时点击总数，我们得先看看是否在页面上已经有点击记录，然后基于此再决定执行更新或者插入操作。如果省略 upsert 选项(或者设为 false)，执行下面的操作不会带来任何变化:
 
 	db.hits.update({page: 'unicorns'},
 		{$inc: {hits: 1}});
 	db.hits.find();
 
-However, if we add the upsert option, the results are quite different:
+但是，如果我们加上 upsert 选项，结果会大不同:
 
 	db.hits.update({page: 'unicorns'},
 		{$inc: {hits: 1}}, {upsert:true});
 	db.hits.find();
 
-Since no documents exists with a field `page` equal to `unicorns`, a new document is inserted. If we execute it a second time, the existing document is updated and `hits` is incremented to 2.
+由于没有找到字段 `page` 等于 `unicorns`的文档，于是一个新的文档就被插入了。如果我们执行这句命令第二次，这个既存的文档会被更新，并且 `hits` 会被增加到 2。
 
 	db.hits.update({page: 'unicorns'},
 		{$inc: {hits: 1}}, {upsert:true});
