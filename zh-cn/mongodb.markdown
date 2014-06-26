@@ -70,59 +70,59 @@ Karl 在 [the-little-mongodb-book](https://github.com/karlseguin/the-little-mong
 现在你可以执行 `mongo` (没有 *d*) ，链接 shell 到你的服务器上了。尝试输入 `db.version()` 来确认所有都正确执行了。你应该能拿到一个已安装的版本号。
 
 # 第一章 - 基础知识 #
-We begin our journey by getting to know the basic mechanics of working with MongoDB. Obviously this is core to understanding MongoDB, but it should also help us answer higher-level questions about where MongoDB fits.
+我们通过学习 MongoDB 的工作基本机制，开始我们的旅程。显然，这是学习 MongoDB 的核心，它也能帮助我们回答诸如，MongoDB 适用场景这些高层次的问题。
 
-To get started, there are six simple concepts we need to understand.
+开始之前，这有六个简单的概念我们需要了解一下。
 
-1. MongoDB has the same concept of a `database` with which you are likely already familiar (or a schema for you Oracle folks).  Within a MongoDB instance you can have zero or more databases, each acting as high-level containers for everything else.
+1. 对于 `database` ，MongoDB 有着和你熟知的"数据库"一样的概念 (对于 Oracle 来说就是 schema)。在一个 MongoDB 实例中，你可以有零个或多个数据库，每个都作为一个高等容器，用于存储数据。
 
-2. A database can have zero or more `collections`. A collection shares enough in common with a traditional `table` that you can safely think of the two as the same thing.
+2. 数据库中可以有零个或多个 `collections` (集合)。集合和传统意义上的 `table` 基本一致，你可以简单的把两者看成是一样的东西。
 
-3. Collections are made up of zero or more `documents`. Again, a document can safely be thought of as a `row`.
+3. 集合是由零个或多个 `documents` (文档)组成。同样，一个文档可以看成是一 `row`。
 
-4. A document is made up of one or more `fields`, which you can probably guess are a lot like `columns`.
+4. 文档是由零个或多个 `fields` (字段)组成。, 你猜对了，它就是 `columns`。
 
-5. `Indexes` in MongoDB function mostly like their RDBMS counterparts.
+5. `Indexes` (索引)在 MongoDB 中扮演着和它们在 RDBMS 中一样的角色。
 
-6. `Cursors` are different than the other five concepts but they are important enough, and often overlooked, that I think they are worthy of their own discussion.  The important thing to understand about cursors is that when you ask MongoDB for data, it returns a pointer to the result set called a cursor, which we can do things to, such as counting or skipping ahead, before actually pulling down data.
+6. `Cursors` (游标)和上面的五个概念都不一样，但是它非常重要，并且经常被忽视，因此我觉得它们值得单独讨论一下。其中最重要的你要理解的一点是，游标是，当你问 MongoDB 拿数据的时候，它会给你返回一个结果集的指针而不是真正的数据，这个指针我们叫它游标，我们可以拿游标做我们想做的任何事情，比如说计数或者跳行之类的，而无需把真正的数据拖下来，在真正的数据上操作。
 
-To recap, MongoDB is made up of `databases` which contain `collections`. A `collection` is made up of `documents`. Each `document` is made up of `fields`. `Collections` can be `indexed`, which improves lookup and sorting performance. Finally, when we get data from MongoDB we do so through a `cursor` whose actual execution is delayed until necessary.
+综上，MongoDB 是由包含 `collections` 的 `databases` 组成的。而 `collection` 是由 `documents`组成。每个 `document` 是由 `fields` 组成。 `Collections` 可以被 `indexed`，以便提高查找和排序的性能。最后，当我们从 MongoDB 获取数据的时候，我们通过 `cursor` 来操作，读操作会被延迟到需要实际数据的时候才会执行。
 
-Why use new terminology (collection vs. table, document vs. row and field vs. column)? Is it just to make things more complicated? The truth is that while these concepts are similar to their relational database counterparts, they are not identical. The core difference comes from the fact that relational databases define `columns` at the `table` level whereas a document-oriented database defines its `fields` at the `document` level. That is to say that each `document` within a `collection` can have its own unique set of `fields`.  As such, a `collection` is a dumbed down container in comparison to a `table`, while a `document` has a lot more information than a `row`.
+那为什么我们需要新的术语(collection vs. table, document vs. row and field vs. column)？为了让看起来更复杂点？事实上，虽然这些概念和关系型数据中的概念类似，但是还是有差异的。核心差异在于，关系型数据是在 `table` 上定义的 `columns`，而面向文档数据库是在 `document` 上定义的 `fields`。也就是说，在 `collection` 中的每个 `document` 都可以有它自己独立的 `fields`。因此，对于 `collection` 来说是个简化了的 `table` ，但是一个 `document` 却比一 `row` 有更多的信息。
 
-Although this is important to understand, don't worry if things aren't yet clear. It won't take more than a couple of inserts to see what this truly means. Ultimately, the point is that a collection isn't strict about what goes in it (it's schema-less). Fields are tracked with each individual document. The benefits and drawbacks of this will be explored in a future chapter.
+虽然这些概念很重要，但是如果现在搞不明白也不要紧。多插几条数据就明白上面说的到底是什么意思了。反正，要点就是，集合不对存储内容严格限制 (所谓的无模式(schema-less))。字段由每个独立的文档进行跟踪处理。这样做的优点和缺点将在下面章节一一讨论。
 
-Let's get hands-on. If you don't have it running already, go ahead and start the `mongod` server as well as a mongo shell. The shell runs JavaScript. There are some global commands you can execute, like `help` or `exit`. Commands that you execute against the current database are executed against the `db` object, such as `db.help()` or `db.stats()`. Commands that you execute against a specific collection, which is what we'll be doing a lot of, are executed against the `db.COLLECTION_NAME` object, such as `db.unicorns.help()` or `db.unicorns.count()`.
+好了我们开始吧。如果你还没有运行 MongoDB，那么快去运行 `mongod` 服务和开启 mongo shell。shell 用的是 JavaScript。你可以试试一些全局命令，比如 `help` 或者 `exit`。如果操作当前数据库的话，用 `db` ，比如 `db.help()` 或者 `db.stats()`。如果对指定集合操作的话，就像大多数情况下我们做的那样，用 `db.COLLECTION_NAME` ，比如 `db.unicorns.help()` 或者 `db.unicorns.count()`。
 
-Go ahead and enter `db.help()`, you'll get a list of commands that you can execute against the `db` object.
+我们继续，输入 `db.help()`，就能拿到一个对 `db` 能执行的所有的命令的列表。
 
-A small side note: Because this is a JavaScript shell, if you execute a method and omit the parentheses `()`, you'll see the method body rather than executing the method. I only mention it so that the first time you do it and get a response that starts with `function (...){` you won't be surprised. For example, if you enter `db.help` (without the parentheses), you'll see the internal implementation of the `help` method.
+顺便说一句:因为这是一个 JavaScript shell，如果你输入的命令漏了 `()`，你会看到这个命令的源码，而不是执行这个命令。我提一下，避免你执行漏了括号的命令，拿到一个以 `function (...){` 开头的返回的时候，觉得神奇不可思议。比如说，如果你输入 `db.help` (不带括号), 你会看到 `help` 方法的内部实现。
 
-First we'll use the global `use` helper to switch databases, so go ahead and enter `use learn`. It doesn't matter that the database doesn't really exist yet. The first collection that we create will also create the actual `learn` database. Now that you are inside a database, you can start issuing database commands, like `db.getCollectionNames()`. If you do so, you should get an empty array (`[ ]`). Since collections are schema-less, we don't explicitly need to create them. We can simply insert a document into a new collection. To do so, use the `insert` command, supplying it with the document to insert:
+首先我们用全局的 `use` 来切换数据库，那么继续，输入 `use learn`。这个数据库实际存在与否完全没有关系。我们生成集合的时候， `learn` 数据库会自动建起来。现在，我们在一个数据库里面了，你可以开始尝试一下数据库命令，比如 `db.getCollectionNames()`。执行之后，你会得到一个空数组 (`[ ]`)。因为集合是无模式的，我们不需要特地去配置它。我们可以简单的插入一个文档到一个新的集合。像这样，我们用 `insert` 命令，在文档中插入:
 
 	db.unicorns.insert({name: 'Aurora',
 		gender: 'f', weight: 450})
 
-The above line is executing `insert` against the `unicorns` collection, passing it a single parameter. Internally MongoDB uses a binary serialized JSON format called BSON. Externally, this means that we use JSON a lot, as is the case with our parameters. If we execute `db.getCollectionNames()` now, we'll actually see two collections: `unicorns` and `system.indexes`. The collection `system.indexes` is created once per database and contains the information on our database's indexes.
+上面这行命令对集合 `unicorns` 执行了 `insert` 命令，并传入一个参数。MongoDB 内部用二进制序列化 JSON 格式，称为 BSON。外部，也就是说我们多数情况应该用 JSON，就像上面的参数一样。然后我们执行 `db.getCollectionNames()` ，我们将能拿到两个集合: `unicorns` 和 `system.indexes`。在每个数据库中都会有一个 `system.indexes` 集合，用来保存我们数据的的索引信息。
 
-You can now use the `find` command against `unicorns` to return a list of documents:
+你现在可以对用 `unicorns` 执行 `find` 命令，然后返回文档列表:
 
 	db.unicorns.find()
 
-Notice that, in addition to the data you specified, there's an `_id` field. Every document must have a unique `_id` field. You can either generate one yourself or let MongoDB generate a value for you which has the type `ObjectId`. Most of the time you'll probably want to let MongoDB generate it for you. By default, the `_id` field is indexed - which explains why the `system.indexes` collection was created. You can look at `system.indexes`:
+注意，除你指定的字段之外，会多出一个 `_id` 字段。每个文档都会有一个唯一 `_id` 字段。你可以自己生成一个，或者让 MongoDB 帮你用 `ObjectId` 生成。多数情况下，你会乐意让 MongoDB 帮你生成的。默认的 `_id` 字段是已被索引的 - 这就说明了为什么会有 `system.indexes` 集合会被创建了。你可以看看 `system.indexes`:
 
 	db.system.indexes.find()
 
-What you're seeing is the name of the index, the database and collection it was created against and the fields included in the index.
+你可以看到索引的名字，被索引的数据库和集合，以及在索引中的字段。
 
-Now, back to our discussion about schema-less collections. Insert a totally different document into `unicorns`, such as:
+现在，回到我们关于数组无模式的讨论中来。往 `unicorns` 插入一个完全不同的文档，比如:
 
 	db.unicorns.insert({name: 'Leto',
 		gender: 'm',
 		home: 'Arrakeen',
 		worm: false})
 
-And, again use `find` to list the documents. Once we know a bit more, we'll discuss this interesting behavior of MongoDB, but hopefully you are starting to understand why the more traditional terminology wasn't a good fit.
+然后，再用 `find` 列出文档。等我们理解再深入一点的时候，将会讨论一下 MongoDB 的有趣行为。到这里，我希望你开始理解，为什么那些传统的术语在这里不适用了。
 
 ## 掌握选择器(Selector) ##
 In addition to the six concepts we've explored, there's one practical aspect of MongoDB you need to have a good grasp of before moving to more advanced topics: query selectors. A MongoDB query selector is like the `where` clause of an SQL statement. As such, you use it when finding, counting, updating and removing documents from collections. A selector is a JSON object, the simplest of which is `{}` which matches all documents. If we wanted to find all female unicorns, we could use `{gender:'f'}`.
