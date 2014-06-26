@@ -12,7 +12,7 @@
 ## 关于作者 ##
 Karl Seguin 在多领域有着丰富经验，他是 .NET 和 Ruby 的开发专家。他也参与贡献 OSS 项目, 还是技术文档撰写人而且偶尔做做演讲。MongoDB 方面，他是 C# MongoDB 库 NoRM 的核心开发者，写有互动入门教程 [mongly](http://openmymind.net/mongly/) 和 [Mongo Web Admin](https://github.com/karlseguin/Mongo-Web-Admin)。他用 MongoDB，为休闲游戏开发者写了一个免费服务, [mogade.com](http://mogade.com/)。
 
-Karl 还编写了 [The Little Redis Book](http://openmymind.net/2012/1/23/The-Little-Redis-Book/)
+Karl 还编写了 [The Little Redis Book](http://openmymind.net/2012/1/23/The-Little-Redis-Book/) *1*
 
 你可以在 <http://openmymind.net> 找到他的 Blog，或者通过 [@karlseguin](http://twitter.com/karlseguin) 在 Twitter 上关注他。
 
@@ -552,7 +552,7 @@ MongoDB 支持内嵌文档以及它灵活的 schema 设计，让两步提交没�
 积极的一方面，它为大多数语言提供了驱动，协议现代而简约，开发速度相当快。MongoDB 被众多公司用到了生产环境中，虽然有所担心，但经过验证后，担心很快就变成了过去。
 
 ## 小结 ##
-本章要说的是，MongoDB，大多数情况下，可以取代关系型数据库。它更简单更直接；更快速并且通常对应用开发者的约束更少。不过缺乏事务支持也许值得慎重考虑。当人们说起 *MongoDB 在新的数据库阵营中到底处在什么位置？* 时，答案很简单: **中庸**(*1*)。
+本章要说的是，MongoDB，大多数情况下，可以取代关系型数据库。它更简单更直接；更快速并且通常对应用开发者的约束更少。不过缺乏事务支持也许值得慎重考虑。当人们说起 *MongoDB 在新的数据库阵营中到底处在什么位置？* 时，答案很简单: **中庸**(*2*)。
 
 # 第六章 - 数据聚合 #
 
@@ -703,7 +703,9 @@ NoSQL 不光是为需求而生，它同时还是不断尝试创新的成果。�
 
 ----------
 
-*1* :参考 [justinyhuang][1] 的翻译。MongoDB 属于 NoSQL，但是和传统关系型数据库类似，且较为通用。
+*1* :中文版本 [the-little-redis-book][1]
 
+*2* :参考 [justinyhuang][2] 的翻译。MongoDB 属于 NoSQL，但是和传统关系型数据库类似，且较为通用。
 
-[1]:https://github.com/justinyhuang/the-little-mongodb-book-cn/blob/master/mongodb.md
+[1]:https://github.com/geminiyellow/the-little-redis-book/blob/master/zh-cn/redis.md
+[2]:https://github.com/justinyhuang/the-little-mongodb-book-cn/blob/master/mongodb.md
