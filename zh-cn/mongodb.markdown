@@ -314,13 +314,13 @@ MongoDB 手册的 [Update Operators](http://docs.mongodb.org/manual/reference/op
 	db.hits.find();
 
 ## Multiple Updates ##
-The final surprise `update` has to offer is that, by default, it'll update a single document. So far, for the examples we've looked at, this might seem logical. However, if you executed something like:
+关于 `update` 的最后一个惊喜，默认的，它只更新单个文档。到目前为止，我们的所有例子，看起来都挺符合逻辑的。但是，如果你执行一些像这样的操作的时候:
 
 	db.unicorns.update({},
 		{$set: {vaccinated: true }});
 	db.unicorns.find({vaccinated: true});
 
-You might expect to find all of your precious unicorns to be vaccinated. To get the behavior you desire, the `multi` option must be set to true:
+你肯定会希望，你所有的宝贝独角兽都被接种疫苗了。为了达到这个目的， `multi` 选项需要设为 true:
 
 	db.unicorns.update({},
 		{$set: {vaccinated: true }},
