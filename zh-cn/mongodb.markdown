@@ -125,9 +125,9 @@ Karl 在 [the-little-mongodb-book](https://github.com/karlseguin/the-little-mong
 然后，再用 `find` 列出文档。等我们理解再深入一点的时候，将会讨论一下 MongoDB 的有趣行为。到这里，我希望你开始理解，为什么那些传统的术语在这里不适用了。
 
 ## 掌握选择器(Selector) ##
-In addition to the six concepts we've explored, there's one practical aspect of MongoDB you need to have a good grasp of before moving to more advanced topics: query selectors. A MongoDB query selector is like the `where` clause of an SQL statement. As such, you use it when finding, counting, updating and removing documents from collections. A selector is a JSON object, the simplest of which is `{}` which matches all documents. If we wanted to find all female unicorns, we could use `{gender:'f'}`.
+除了我们介绍过的六个概念之外，在开始讨论更深入的话题之前，MongoDB 还有一个应该掌握的实用概念:查询选择器。MongoDB 的查询选择器就像 SQL 语句里面的 `where` 一样。因此，你会在对集合的文档做查找，技术，更新，删除的时候用到它。选择器是一个 JSON 对象，最简单的是就是用 `{}` 匹配所有的文档。如果我们想找出所有的母独角兽，我们可以用 `{gender:'f'}`。
 
-Before delving too deeply into selectors, let's set up some data to play with. First, remove what we've put so far in the `unicorns` collection via: `db.unicorns.remove({})`. Now, issue the following inserts to get some data we can play with (I suggest you copy and paste this):
+开始深入学习选择器之前，让我们先做些准备。首先，把刚才我们插入 `unicorns` 集合的数据删除，通过: `db.unicorns.remove({})`。现在，再插入一些用来演示的数据 (你不会手打吧):
 
 	db.unicorns.insert({name: 'Horny',
 		dob: new Date(1992,2,13,7,47),
@@ -202,7 +202,7 @@ Before delving too deeply into selectors, let's set up some data to play with. F
 		gender: 'm',
 		vampires: 165});
 
-Now that we have data, we can master selectors. `{field: value}` is used to find any documents where `field` is equal to `value`. `{field1: value1, field2: value2}` is how we do an `and` statement. The special `$lt`, `$lte`, `$gt`, `$gte` and `$ne` are used for less than, less than or equal, greater than, greater than or equal and not equal operations. For example, to get all male unicorns that weigh more than 700 pounds, we could do:
+现在我们有数据了，我们可以开始来学习掌握选择器了。`{field: value}` 用来查找那些 `field` 的值等于 `value` 的文档。 `{field1: value1, field2: value2}` 相当于 `and` 查询。还有 `$lt`, `$lte`, `$gt`, `$gte` 和 `$ne` 被用来处理 小于，小于等于，大于，大于等于，和不等于操作。比如，获取所有体重大于700磅的公独角兽，我们可以这样:
 
 	db.unicorns.find({gender: 'm',
 		weight: {$gt: 700}})
@@ -212,33 +212,33 @@ Now that we have data, we can master selectors. `{field: value}` is used to find
 		weight: {$gte: 701}})
 
     	
-The `$exists` operator is used for matching the presence or absence of a field, for example:
+`$exists` 操作用来匹配字段是否存在，比如:
 
 	db.unicorns.find({
 		vampires: {$exists: false}})
 
-should return a single document. The '$in' operator is used for matching one of several values that we pass as an array, for example:
+会返回一条文档。'$in' 操作被用来匹配在我们传入的数组参数中是否存在匹配值，比如:
 
     db.unicorns.find({
     	loves: {$in:['apple','orange']}})
 
-This returns any unicorn who loves 'apple' or 'orange'.
+会返回那些喜欢 'apple' 或者 'orange' 的独角兽。
 
-If we want to OR rather than AND several conditions on different fields, we use the `$or` operator and assign to it an array of selectors we want or'd:
+如果我们想要 OR 而不是 AND 来处理选择条件的话，我们可以用 `$or` 操作符，给它一个我们要匹配的数组:
 
 	db.unicorns.find({gender: 'f',
 		$or: [{loves: 'apple'},
 			  {weight: {$lt: 500}}]})
 
-The above will return all female unicorns which either love apples or weigh less than 500 pounds.
+上面的查询会返回那些喜欢 'apples' 或者 'weigh' 小于500磅的母独角兽。
 
-There's something pretty neat going on in our last two examples. You might have already noticed, but the `loves` field is an array. MongoDB supports arrays as first class objects. This is an incredibly handy feature. Once you start using it, you wonder how you ever lived without it. What's more interesting is how easy selecting based on an array value is: `{loves: 'watermelon'}` will return any document where `watermelon` is a value of `loves`.
+在我们最后两个例子里面有个非常赞的特性。你应该已经注意到了，`loves` 字段是个数组。MongoDB 允许数组作为基本对象(first class objects)处理。这是个令人难以置信的超赞特性。一旦你开始用它，你都不知道没了它你怎么活下去了。最有趣的是，基于数组的查询变得非常简单: `{loves: 'watermelon'}` 会把文档中 `loves` 中有 `watermelon` 的值全部查询出来。
 
-There are more available operators than what we've seen so far. These are all described in the [Query Selectors](http://docs.mongodb.org/manual/reference/operator/query/#query-selectors) section of the MongoDB manual. What we've covered so far though is the basics you'll need to get started. It's also what you'll end up using most of the time.
+除了我们介绍的这些，还有更多可用的操作。所有这些都记载在 MongoDB 手册上的 [Query Selectors](http://docs.mongodb.org/manual/reference/operator/query/#query-selectors) 这一章。我们介绍的仅仅是那些你开始学习所需要用到的，同时也是你最经常用到的操作。
 
-We've seen how these selectors can be used with the `find` command. They can also be used with the `remove` command which we've briefly looked at, the `count` command, which we haven't looked at but you can probably figure out, and the `update` command which we'll spend more time with later on.
+我们已经学习了选择器是如何配合 `find` 命令使用的了。还大致介绍了一下如何配合 `remove` 命令使用，`count` 命令虽然没介绍，不过你肯定知道应该怎么做，还有 `update` 命令，之后我们会花多点时间来详细学习它。
 
-The `ObjectId` which MongoDB generated for our `_id` field can be selected like so:
+MongoDB 为我们的 `_id` 字段生成的 `ObjectId` 可以这样查询:
 
 	db.unicorns.find(
 		{_id: ObjectId("TheObjectId")})
