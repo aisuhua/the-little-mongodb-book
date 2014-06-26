@@ -249,19 +249,19 @@ MongoDB 为我们的 `_id` 字段生成的 `ObjectId` 可以这样查询:
 # 第二章 - 更新 #
 在第一章，我们介绍了 CRUD 的四分之三(create, read, update 和 delete) 操作。这章，我们来专门来讨论我们跳过的那个操作: `update`。 `Update` 有些独特的行为，这是为什么我们把它独立成章。
 
-## Update: Replace Versus $set ##
-In its simplest form, `update` takes two parameters: the selector (where) to use and what updates to apply to fields. If Roooooodles had gained a bit of weight, you might expect that we should execute:
+## Update: 覆盖还是 $set ##
+最简单的情况， `update` 有两个参数: 选择器 (`where`) 和需要更新字段的内容。假设 Roooooodles 长胖了，你会希望我们这样操作:
 
 	db.unicorns.update({name: 'Roooooodles'},
 		{weight: 590})
 
-(If you've played with your `unicorns` collection and it doesn't have the original data anymore, go ahead and `remove` all documents and re-insert from the code in chapter 1.)
+(如果你已经把 `unicorns` 集合玩坏了，它已经不是原来的数据了的话，再执行一次 `remove` 删除所有数据，然后重新插入第一章中所有的代码。)
 
-Now, if we look at the updated record:
+现在，如果你查一下被更新了的记录:
 
 	db.unicorns.find({name: 'Roooooodles'})
 
-You should discover the first surprise of `update`. No document is found because the second parameter we supplied didn't have any update operators, and therefore it was used to **replace** the original document. In other words, the `update` found a document by `name` and replaced the entire document with the new document (the second parameter). There is no equivalent functionality to this in SQL's `update` command. In some situations, this is ideal and can be leveraged for some truly dynamic updates. However, when you want to change the value of one, or a few fields, you must use MongoDB's `$set` operator. Go ahead and run this update to reset the lost fields:
+你会发现 `update` 的第一个惊喜，没找到任何文档。因为我们指定的第二个参数没有使用任何的更新选项，因此，它 **replace** 了原始文档。也就是说， `update` 先根据 `name` 找到一个文档，然后用新文档(第二个参数)替换了整个文档。这和 SQL 的 `update` 命令的完全不一样。在某些情况下，这非常理想，可以用于某些完全动态更新上。但是，如果你只希望改变一个或者几个字段的值的时候，你应该用 MongoDB 的 `$set` 操作。继续，让我们来更新重置这个丢失的数据:
 
 	db.unicorns.update({weight: 590}, {$set: {
 		name: 'Roooooodles',
@@ -270,11 +270,11 @@ You should discover the first surprise of `update`. No document is found because
 		gender: 'm',
 		vampires: 99}})
 
-This won't overwrite the new `weight` since we didn't specify it. Now if we execute:
+这里不是覆盖新字段 `weight` 因为我们没有指定它。现在让我们来执行:
 
 	db.unicorns.find({name: 'Roooooodles'})
 
-We get the expected result. Therefore, the correct way to have updated the weight in the first place is:
+我们拿到了期待的结果。因此，在最开始的时候，我们正确的更新 weight 的方式应该是:
 
 	db.unicorns.update({name: 'Roooooodles'},
 		{$set: {weight: 590}})
