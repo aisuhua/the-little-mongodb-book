@@ -279,18 +279,18 @@ MongoDB 为我们的 `_id` 字段生成的 `ObjectId` 可以这样查询:
 	db.unicorns.update({name: 'Roooooodles'},
 		{$set: {weight: 590}})
 
-## Update Operators ##
-In addition to `$set`, we can leverage other operators to do some nifty things. All update operators work on fields - so your entire document won't be wiped out. For example, the `$inc` operator is used to increment a field by a certain positive or negative amount. If Pilot was incorrectly awarded a couple vampire kills, we could correct the mistake by executing:
+## Update 操作符 ##
+除了 `$set`，我们还可以用其他的更新操作符做些有意思的事情。所有的更新操作都是对字段起作用 - 所以你不用担心整个文档被删掉。比如，`$inc` 可以用来给一个字段增加一个正/负值。假设说 Pilot 获得了非法的两个 vampire kills 点，我们可以这样修正它:
 
 	db.unicorns.update({name: 'Pilot'},
 		{$inc: {vampires: -2}})
 
-If Aurora suddenly developed a sweet tooth, we could add a value to her `loves` field via the `$push` operator:
+假设 Aurora 忽然长牙了，我们可以给她的 `loves` 字段加一个值，通过 `$push` 操作:
 
 	db.unicorns.update({name: 'Aurora'},
 		{$push: {loves: 'sugar'}})
 
-The [Update Operators](http://docs.mongodb.org/manual/reference/operator/update/#update-operators) section of the MongoDB manual has more information on the other available update operators.
+MongoDB 手册的 [Update Operators](http://docs.mongodb.org/manual/reference/operator/update/#update-operators) 这章，可以查到更多可用的更新操作符的信息。
 
 ## Upserts ##
 One of the more pleasant surprises of using `update` is that it fully supports `upserts`. An `upsert` updates the document if found or inserts it if not. Upserts are handy to have in certain situations and when you run into one, you'll know it. To enable upserting we pass a third parameter to update `{upsert:true}`.
