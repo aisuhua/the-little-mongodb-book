@@ -307,7 +307,7 @@ MongoDB 手册的 [Update Operators](http://docs.mongodb.org/manual/reference/op
 		{$inc: {hits: 1}}, {upsert:true});
 	db.hits.find();
 
-由于没有找到字段 `page` 等于 `unicorns`的文档，于是一个新的文档就被插入了。如果我们执行这句命令第二次，这个既存的文档会被更新，并且 `hits` 会被增加到 2。
+由于没有找到字段 `page` 值为 `unicorns`的文档，一个新的文档被生成插入。当我们第二次执行这句命令的时候，这个既存的文档将会被更新，且 `hits` 会被增加到 2。
 
 	db.hits.update({page: 'unicorns'},
 		{$inc: {hits: 1}}, {upsert:true});
