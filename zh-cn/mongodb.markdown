@@ -125,7 +125,7 @@ Karl 在 [the-little-mongodb-book](https://github.com/karlseguin/the-little-mong
 然后，再用 `find` 列出文档。等我们理解再深入一点的时候，将会讨论一下 MongoDB 的有趣行为。到这里，我希望你开始理解，为什么那些传统的术语在这里不适用了。
 
 ## 掌握选择器(Selector) ##
-除了我们介绍过的六个概念之外，在开始讨论更深入的话题之前，MongoDB 还有一个应该掌握的实用概念:查询选择器。MongoDB 的查询选择器就像 SQL 语句里面的 `where` 一样。因此，你会在对集合的文档做查找，技术，更新，删除的时候用到它。选择器是一个 JSON 对象，最简单的是就是用 `{}` 匹配所有的文档。如果我们想找出所有的母独角兽，我们可以用 `{gender:'f'}`。
+除了我们介绍过的六个概念，在开始讨论更深入的话题之前，MongoDB 还有一个应该掌握的实用概念:查询选择器。MongoDB 的查询选择器就像 SQL 语句里面的 `where` 一样。因此，你会在对集合的文档做查找，计数，更新，删除的时候用到它。选择器是一个 JSON 对象，最简单的是就是用 `{}` 匹配所有的文档。如果我们想找出所有母独角兽，我们可以用 `{gender:'f'}`。
 
 开始深入学习选择器之前，让我们先做些准备。首先，把刚才我们插入 `unicorns` 集合的数据删除，通过: `db.unicorns.remove({})`。现在，再插入一些用来演示的数据 (你不会手打吧):
 
@@ -212,31 +212,31 @@ Karl 在 [the-little-mongodb-book](https://github.com/karlseguin/the-little-mong
 		weight: {$gte: 701}})
 
     	
-`$exists` 操作用来匹配字段是否存在，比如:
+`$exists` 用来匹配字段是否存在，比如:
 
 	db.unicorns.find({
 		vampires: {$exists: false}})
 
-会返回一条文档。'$in' 操作被用来匹配在我们传入的数组参数中是否存在匹配值，比如:
+会返回一条文档。'$in' 被用来匹配查询文档在我们传入的数组参数中是否存在匹配值，比如:
 
     db.unicorns.find({
     	loves: {$in:['apple','orange']}})
 
-会返回那些喜欢 'apple' 或者 'orange' 的独角兽。
+会返回那些喜欢 `apple` 或者 `orange` 的独角兽。
 
-如果我们想要 OR 而不是 AND 来处理选择条件的话，我们可以用 `$or` 操作符，给它一个我们要匹配的数组:
+如果我们想要 OR 而不是 AND 来处理选择条件的话，我们可以用 `$or` 操作符，再给它一个我们要匹配的数组:
 
 	db.unicorns.find({gender: 'f',
 		$or: [{loves: 'apple'},
 			  {weight: {$lt: 500}}]})
 
-上面的查询会返回那些喜欢 'apples' 或者 'weigh' 小于500磅的母独角兽。
+上面的查询会返回那些喜欢 `apples` 或者 `weigh` 小于500磅的母独角兽。
 
 在我们最后两个例子里面有个非常赞的特性。你应该已经注意到了，`loves` 字段是个数组。MongoDB 允许数组作为基本对象(first class objects)处理。这是个令人难以置信的超赞特性。一旦你开始用它，你都不知道没了它你怎么活下去了。最有趣的是，基于数组的查询变得非常简单: `{loves: 'watermelon'}` 会把文档中 `loves` 中有 `watermelon` 的值全部查询出来。
 
-除了我们介绍的这些，还有更多可用的操作。所有这些都记载在 MongoDB 手册上的 [Query Selectors](http://docs.mongodb.org/manual/reference/operator/query/#query-selectors) 这一章。我们介绍的仅仅是那些你开始学习所需要用到的，同时也是你最经常用到的操作。
+除了我们介绍的这些，还有更多可用的操作。所有这些都记载在 MongoDB 手册上的 [Query Selectors](http://docs.mongodb.org/manual/reference/operator/query/#query-selectors) 这一章。我们介绍的仅仅是那些你学习时所需要用到的，同时也是你最经常用到的操作。
 
-我们已经学习了选择器是如何配合 `find` 命令使用的了。还大致介绍了一下如何配合 `remove` 命令使用，`count` 命令虽然没介绍，不过你肯定知道应该怎么做，还有 `update` 命令，之后我们会花多点时间来详细学习它。
+我们已经学习了选择器是如何配合 `find` 命令使用的了。还大致介绍了一下如何配合 `remove` 命令使用，`count` 命令虽然没介绍，不过你肯定知道应该怎么做，而 `update` 命令，之后我们会花多点时间来详细学习它。
 
 MongoDB 为我们的 `_id` 字段生成的 `ObjectId` 可以这样查询:
 
