@@ -247,7 +247,7 @@ MongoDB 为我们的 `_id` 字段生成的 `ObjectId` 可以这样查询:
 我们还没有看到 `update` , 或是能拿来做更华丽事情的 `find`。不过，我们已经安装好 MongoDB 并运行起来了, 简略的介绍了一下 `insert` 和 `remove` 命令 (完整版也没比我们介绍的多什么)。 我们还介绍了 `find` 以及了解了 MongoDB `selectors` 是怎么一回事。 我们起了个很好的头，并为以后的学习奠定了坚实基础。 信不信由你，其实你已经掌握了学习 MongoDB 所必须的大多数知识 - 它真的是易学易用。 我强烈建议你在继续学习之前在本机上多试试多玩玩。 插入不同的文档，可以试试看在不同的集合中，习惯一下使用不同的选择器。试试 `find`, `count` 和 `remove`。 多试几次之后，你会发现原来看起来那么格格不入的东西，用起来居然水到渠成。
 
 # 第二章 - 更新 #
-In chapter 1 we introduced three of the four CRUD (create, read, update and delete) operations. This chapter is dedicated to the one we skipped over: `update`. `Update` has a few surprising behaviors, which is why we dedicate a chapter to it.
+在第一章，我们介绍了 CRUD 的四分之三(create, read, update 和 delete) 操作。这章，我们来专门来讨论我们跳过的那个操作: `update`。 `Update` 有些独特的行为，这是为什么我们把它独立成章。
 
 ## Update: Replace Versus $set ##
 In its simplest form, `update` takes two parameters: the selector (where) to use and what updates to apply to fields. If Roooooodles had gained a bit of weight, you might expect that we should execute:
