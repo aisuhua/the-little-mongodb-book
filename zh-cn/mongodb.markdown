@@ -27,6 +27,8 @@ Karl 还编写了 [The Little Redis Book](http://openmymind.net/2012/1/23/The-Li
 ### 中文版本 ###
 Karl 在 [the-little-mongodb-book](https://github.com/karlseguin/the-little-mongodb-book) 的 Github 链接中给出了 [justinyhuang](https://github.com/justinyhuang) 的 [the-little-mongodb-book-cn](https://github.com/justinyhuang/the-little-mongodb-book-cn) 链接。但貌似 justinyhuang 并没有同步更新到 MongoDB 2.6 。内容上也和原文稍微有点出入，并且由于本人水平有限，无法提交自信正确的内容。因此重开一项目。如果你被搜索引擎引导到本工程，在此向你致歉，并希望有能力者且有时间者一同完善和同步本工程。你可以通过我的 邮箱 <geminiyellow@gmail.com> 来联系我，或者通过 [@geminiyellow](https://twitter.com/geminiyellow) 在 Twitter 上关注我。
 
+最新中文版本基于 [asya999](https://github.com/asya999) 在 May 29, 2014 提交的 [#38](https://github.com/karlseguin/the-little-mongodb-book/pull/38) SHA 是：6d4dce8ead6a767e1e8de1b59f714510d36d366f
+
 # 简介 #
  > 这章那么短不是我的错，MongoDB 就真的很易学。
 
