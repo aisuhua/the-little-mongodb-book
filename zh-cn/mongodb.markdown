@@ -585,7 +585,7 @@ MongoDB 数组非常强大，并且他们不会阻止我们往保存中的数组
 	  	{$sort:{total:-1}}, 
 	  	{$limit:1} ])
 		
-这里我们可以找出独角兽最喜欢吃的食物，以及拿到独角兽们喜欢吃的食物名单。 `$sort` 和 `$limit` 的组合能让你拿到 "top N" 这种查询的结果。
+这里我们可以找出独角兽最喜欢吃的食物，以及拿到喜欢这种食物的独角兽的名单。 `$sort` 和 `$limit` 的组合能让你拿到 "top N" 这种查询的结果。
 
 还有另外一个强大的管道操作叫做 [`$project`](http://docs.mongodb.org/manual/reference/operator/aggregation/project/#pipe._S_project) (类似于 `find`)，不但允许你拿到指定字段，还可以根据现存字段进行创建或计算一个新字段。比如，可以用数学操作，在做平均运算之前，对几个字段进行加法运算，或者你可以用字符串操作创建一个新的字段，用于拼接现有字段。
 
@@ -665,7 +665,7 @@ MongoDB 支持自动分片。分片是实现数据扩展的一种方法，依靠
 
 输出会告诉我们:什么时候执行了什么，有多少文档被扫描，有多少数据被返回。
 
-你要停止 profiler 只需要再调用一次 `setProfilingLevel` ，不过这次参数是 `0`。指定 `1` 作为第一个参数，将会过滤统计超过 100 milliseconds 的任务. 100 milliseconds 是默认的阈值，你可以在第二个参数中，指定不同的阈值时间，以 milliseconds 为单位:
+你要停止 profiler 只需要再调用一次 `setProfilingLevel` ，不过这次参数是 `0`。指定 `1` 作为第一个参数，将会统计那些超过 100 milliseconds 的任务. 100 milliseconds 是默认的阈值，你可以在第二个参数中，指定不同的阈值时间，以 milliseconds 为单位:
 
 	//profile anything that takes
 	//more than 1 second
